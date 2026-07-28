@@ -34,6 +34,160 @@ const LinkedinIcon = ({ size = 16 }: { size?: number }) => (
   </svg>
 );
 
+// ─── Animated Background ───────────────────────────────────────────────────────
+const ORBS = [
+  { size: 700, x: "10%",  y: "-15%", color: "rgba(99,91,255,0.22)",  dur: 22, delay: 0   },
+  { size: 480, x: "70%",  y: "30%",  color: "rgba(99,91,255,0.14)",  dur: 28, delay: -6  },
+  { size: 380, x: "40%",  y: "65%",  color: "rgba(167,139,250,0.10)",dur: 18, delay: -11 },
+  { size: 300, x: "-5%",  y: "55%",  color: "rgba(99,91,255,0.09)",  dur: 32, delay: -4  },
+];
+
+const PARTICLES = Array.from({ length: 28 }, (_, i) => ({
+  id: i,
+  x: Math.random() * 100,
+  y: Math.random() * 100,
+  size: Math.random() * 2.5 + 0.5,
+  dur: Math.random() * 14 + 10,
+  delay: -(Math.random() * 20),
+  driftX: (Math.random() - 0.5) * 120,
+  driftY: (Math.random() - 0.5) * 80,
+}));
+
+function AnimatedBackground() {
+  return (
+    <div
+      aria-hidden="true"
+      className="pointer-events-none select-none"
+      style={{
+        position: "fixed",
+        inset: 0,
+        zIndex: 0,
+        overflow: "hidden",
+      }}
+    >
+      {/* Noise grain */}
+      <div className="noise-overlay" />
+
+      {/* Floating glowing orbs */}
+      {ORBS.map((orb, i) => (
+        <motion.div
+          key={i}
+          style={{
+            position: "absolute",
+            left: orb.x,
+            top: orb.y,
+            width: orb.size,
+            height: orb.size,
+            borderRadius: "50%",
+            background: `radial-gradient(circle at 40% 40%, ${orb.color} 0%, transparent 70%)`,
+            filter: "blur(80px)",
+            willChange: "transform, opacity",
+          }}
+          animate={{
+            x: [0, 60 * (i % 2 === 0 ? 1 : -1), -40, 0],
+            y: [0, -50, 30, 0],
+            scale: [1, 1.12, 0.95, 1],
+            opacity: [0.8, 1, 0.7, 0.8],
+          }}
+          transition={{
+            duration: orb.dur,
+            delay: orb.delay,
+            repeat: Infinity,
+            ease: "easeInOut",
+          }}
+        />
+      ))}
+
+      {/* Drifting particles */}
+      {PARTICLES.map((p) => (
+        <motion.div
+          key={p.id}
+          style={{
+            position: "absolute",
+            left: `${p.x}%`,
+            top: `${p.y}%`,
+            width: p.size,
+            height: p.size,
+            borderRadius: "50%",
+            background: "rgba(99,91,255,0.7)",
+            boxShadow: `0 0 ${p.size * 3}px rgba(99,91,255,0.5)`,
+            willChange: "transform, opacity",
+          }}
+          animate={{
+            x: [0, p.driftX, 0],
+            y: [0, p.driftY, 0],
+            opacity: [0, 0.6, 0.2, 0.7, 0],
+          }}
+          transition={{
+            duration: p.dur,
+            delay: p.delay,
+            repeat: Infinity,
+            ease: "easeInOut",
+          }}
+        />
+      ))}
+
+      {/* Subtle architectural grid */}
+      <div
+        style={{
+          position: "absolute",
+          inset: 0,
+          backgroundImage:
+            "radial-gradient(circle, rgba(99,91,255,0.12) 1px, transparent 1px)",
+          backgroundSize: "48px 48px",
+          maskImage:
+            "radial-gradient(ellipse 80% 60% at 50% 50%, black 40%, transparent 100%)",
+          WebkitMaskImage:
+            "radial-gradient(ellipse 80% 60% at 50% 50%, black 40%, transparent 100%)",
+          opacity: 0.35,
+        }}
+      />
+    </div>
+  );
+}
+
+// ─── Animated headline — per-word stagger reveal ───────────────────────────────
+const HEADLINE_WORDS = [
+  { text: "Intelligent",  gradient: false },
+  { text: "Automation.",  gradient: true  },
+  { text: "Flawless",     gradient: false },
+  { text: "Web",          gradient: false },
+  { text: "Execution.",   gradient: true  },
+];
+
+function AnimatedHeadline() {
+  return (
+    <motion.h1
+      id="hero-headline"
+      className="flex flex-wrap justify-center gap-x-5 gap-y-2"
+      style={{
+        fontSize: "clamp(3rem, 7vw, 6.5rem)",
+        fontWeight: 900,
+        lineHeight: 1.0,
+        letterSpacing: "-0.04em",
+      }}
+      aria-label="Intelligent Automation. Flawless Web Execution."
+    >
+      {HEADLINE_WORDS.map((word, i) => (
+        <motion.span
+          key={i}
+          initial={{ opacity: 0, y: 40, filter: "blur(8px)" }}
+          animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+          transition={{
+            duration: 0.65,
+            delay: 0.15 + i * 0.11,
+            ease: [0.22, 1, 0.36, 1],
+          }}
+          className={word.gradient ? "glow-text" : ""}
+          style={word.gradient ? {} : { color: "var(--text-primary)" }}
+        >
+          {word.text}
+        </motion.span>
+      ))}
+    </motion.h1>
+  );
+}
+
 // ─── Magnetic Button ───────────────────────────────────────────────────────────
 function MagneticButton({
   children,
@@ -300,10 +454,8 @@ const stats = [
 export default function Home() {
   return (
     <>
-      {/* Background effects */}
-      <div className="noise-overlay" aria-hidden="true" />
-      <div className="orb orb-1" aria-hidden="true" />
-      <div className="orb orb-2" aria-hidden="true" />
+      {/* Immersive interactive background */}
+      <AnimatedBackground />
 
       {/* Navbar */}
       <Navbar />
@@ -313,11 +465,11 @@ export default function Home() {
         <section
           id="hero"
           className="section"
-          style={{ paddingTop: "180px", paddingBottom: "140px" }}
+          style={{ paddingTop: "200px", paddingBottom: "160px" }}
           aria-labelledby="hero-headline"
         >
           <div className="container">
-            <div className="flex flex-col items-center text-center gap-8 max-w-4xl mx-auto">
+            <div className="flex flex-col items-center text-center gap-10 max-w-6xl mx-auto">
               {/* Eyebrow badge */}
               <motion.div
                 initial={{ opacity: 0, y: 16 }}
@@ -330,37 +482,27 @@ export default function Home() {
                 </span>
               </motion.div>
 
-              {/* H1 Headline */}
-              <motion.h1
-                id="hero-headline"
-                initial={{ opacity: 0, y: 24 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.1 }}
-                className="text-6xl md:text-7xl lg:text-8xl font-extrabold tracking-tighter leading-[1.02]"
-                style={{ letterSpacing: "-0.03em" }}
-              >
-                We Build the{" "}
-                <span className="glow-text">Web of Tomorrow.</span>
-              </motion.h1>
+              {/* H1 — animated word reveal */}
+              <AnimatedHeadline />
 
               {/* Sub-headline */}
               <motion.p
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.2 }}
-                className="text-lg md:text-xl leading-relaxed max-w-2xl"
+                transition={{ duration: 0.7, delay: 0.75 }}
+                className="text-lg md:text-xl leading-relaxed max-w-3xl"
                 style={{ color: "var(--text-secondary)" }}
               >
-                HUZ is a premium agency crafting world-class web experiences and
-                intelligent AI automation systems. From concept to deployment —
-                we make ideas unforgettable.
+                HUZ engineers high-performance web platforms and autonomous AI
+                systems for ambitious teams — shipping fast, scaling reliably,
+                and looking exceptional at every breakpoint.
               </motion.p>
 
               {/* CTA Row */}
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.3 }}
+                transition={{ duration: 0.6, delay: 0.9 }}
                 className="flex flex-col sm:flex-row items-center gap-4"
               >
                 <MagneticButton id="hero-cta-primary" href="#contact">
@@ -380,17 +522,17 @@ export default function Home() {
               <motion.div
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
-                transition={{ duration: 0.8, delay: 0.5 }}
-                className="w-full mt-8"
+                transition={{ duration: 0.8, delay: 1.1 }}
+                className="w-full mt-4"
               >
-                <div className="accent-line mb-8" />
+                <div className="accent-line mb-10" />
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
                   {stats.map((stat, i) => (
                     <motion.div
                       key={stat.label}
                       initial={{ opacity: 0, y: 12 }}
                       animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: 0.55 + i * 0.08, duration: 0.5 }}
+                      transition={{ delay: 1.15 + i * 0.08, duration: 0.5 }}
                       className="flex flex-col gap-1"
                     >
                       <span
