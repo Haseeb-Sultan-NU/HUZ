@@ -201,23 +201,40 @@ body {
   padding: 0 24px;
 }
 
-/* Navbar */
-.navbar {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: 100;
-  padding: 20px 0;
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border-bottom: 1px solid transparent;
-  transition: border-color 0.3s ease, background 0.3s ease;
+/* Nav link */
+.nav-link {
+  display: inline-flex;
+  align-items: center;
+  padding: 6px 12px;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  text-decoration: none;
+  transition: color 0.2s ease, background 0.2s ease;
+  letter-spacing: -0.01em;
 }
 
-.navbar.scrolled {
-  border-bottom-color: var(--border);
-  background: rgba(10, 10, 10, 0.85);
+.nav-link:hover {
+  color: var(--text-primary);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+/* Pulsing green LED status dot */
+.nav-status-dot {
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #4ade80;
+  box-shadow: 0 0 6px #4ade80;
+  animation: status-pulse 2s ease-in-out infinite;
+  flex-shrink: 0;
+}
+
+@keyframes status-pulse {
+  0%, 100% { opacity: 1; box-shadow: 0 0 6px #4ade80; }
+  50%       { opacity: 0.5; box-shadow: 0 0 12px #4ade80; }
 }
 
 /* Stat number animation */
@@ -237,7 +254,69 @@ body {
   margin: 0;
 }
 
-/* Footer gradient */
-.footer-gradient {
-  background: linear-gradient(to bottom, transparent, rgba(99, 91, 255, 0.05));
+/* ─── Footer ──────────────────────────────────────────────────────────────── */
+
+/* Pre-footer CTA card */
+.footer-cta-card {
+  position: relative;
+  background: linear-gradient(135deg, #131320 0%, #0f0f1a 50%, #131320 100%);
+  border: 1px solid rgba(99, 91, 255, 0.22);
+  border-radius: 20px;
+  padding: 48px 56px;
+  overflow: hidden;
+}
+
+/* Ambient glow inside CTA card */
+.footer-cta-glow {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(ellipse 80% 60% at 20% 50%, rgba(99,91,255,0.14) 0%, transparent 70%);
+}
+
+/* Gradient divider */
+.footer-divider {
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(99, 91, 255, 0.2) 30%,
+    rgba(167, 139, 250, 0.3) 50%,
+    rgba(99, 91, 255, 0.2) 70%,
+    transparent 100%
+  );
+}
+
+/* Social icon in footer */
+.footer-social-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 9px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  color: var(--text-muted);
+  text-decoration: none;
+  transition: border-color 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.footer-social-icon:hover {
+  border-color: var(--border-accent);
+  color: var(--accent);
+  box-shadow: 0 0 12px rgba(99, 91, 255, 0.25);
+}
+
+/* Footer link */
+.footer-link {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  text-decoration: none;
+  transition: color 0.2s ease;
+  line-height: 1.4;
+}
+
+.footer-link:hover {
+  color: var(--text-primary);
 }

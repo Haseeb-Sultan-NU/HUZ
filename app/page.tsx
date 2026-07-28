@@ -58,17 +58,10 @@ function AnimatedBackground() {
     <div
       aria-hidden="true"
       className="pointer-events-none select-none"
-      style={{
-        position: "fixed",
-        inset: 0,
-        zIndex: 0,
-        overflow: "hidden",
-      }}
+      style={{ position: "fixed", inset: 0, zIndex: 0, overflow: "hidden" }}
     >
-      {/* Noise grain */}
       <div className="noise-overlay" />
 
-      {/* Floating glowing orbs */}
       {ORBS.map((orb, i) => (
         <motion.div
           key={i}
@@ -89,16 +82,10 @@ function AnimatedBackground() {
             scale: [1, 1.12, 0.95, 1],
             opacity: [0.8, 1, 0.7, 0.8],
           }}
-          transition={{
-            duration: orb.dur,
-            delay: orb.delay,
-            repeat: Infinity,
-            ease: "easeInOut",
-          }}
+          transition={{ duration: orb.dur, delay: orb.delay, repeat: Infinity, ease: "easeInOut" }}
         />
       ))}
 
-      {/* Drifting particles */}
       {PARTICLES.map((p) => (
         <motion.div
           key={p.id}
@@ -118,27 +105,18 @@ function AnimatedBackground() {
             y: [0, p.driftY, 0],
             opacity: [0, 0.6, 0.2, 0.7, 0],
           }}
-          transition={{
-            duration: p.dur,
-            delay: p.delay,
-            repeat: Infinity,
-            ease: "easeInOut",
-          }}
+          transition={{ duration: p.dur, delay: p.delay, repeat: Infinity, ease: "easeInOut" }}
         />
       ))}
 
-      {/* Subtle architectural grid */}
       <div
         style={{
           position: "absolute",
           inset: 0,
-          backgroundImage:
-            "radial-gradient(circle, rgba(99,91,255,0.12) 1px, transparent 1px)",
+          backgroundImage: "radial-gradient(circle, rgba(99,91,255,0.12) 1px, transparent 1px)",
           backgroundSize: "48px 48px",
-          maskImage:
-            "radial-gradient(ellipse 80% 60% at 50% 50%, black 40%, transparent 100%)",
-          WebkitMaskImage:
-            "radial-gradient(ellipse 80% 60% at 50% 50%, black 40%, transparent 100%)",
+          maskImage: "radial-gradient(ellipse 80% 60% at 50% 50%, black 40%, transparent 100%)",
+          WebkitMaskImage: "radial-gradient(ellipse 80% 60% at 50% 50%, black 40%, transparent 100%)",
           opacity: 0.35,
         }}
       />
@@ -146,7 +124,7 @@ function AnimatedBackground() {
   );
 }
 
-// ─── Animated headline — per-word stagger reveal ───────────────────────────────
+// ─── Animated Headline ─────────────────────────────────────────────────────────
 const HEADLINE_WORDS = [
   { text: "Intelligent",  gradient: false },
   { text: "Automation.",  gradient: true  },
@@ -173,11 +151,7 @@ function AnimatedHeadline() {
           key={i}
           initial={{ opacity: 0, y: 40, filter: "blur(8px)" }}
           animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-          transition={{
-            duration: 0.65,
-            delay: 0.15 + i * 0.11,
-            ease: [0.22, 1, 0.36, 1],
-          }}
+          transition={{ duration: 0.65, delay: 0.15 + i * 0.11, ease: [0.22, 1, 0.36, 1] }}
           className={word.gradient ? "glow-text" : ""}
           style={word.gradient ? {} : { color: "var(--text-primary)" }}
         >
@@ -212,10 +186,8 @@ function MagneticButton({
     const rect = ref.current.getBoundingClientRect();
     const centerX = rect.left + rect.width / 2;
     const centerY = rect.top + rect.height / 2;
-    const distX = (e.clientX - centerX) * 0.35;
-    const distY = (e.clientY - centerY) * 0.35;
-    x.set(distX);
-    y.set(distY);
+    x.set((e.clientX - centerX) * 0.35);
+    y.set((e.clientY - centerY) * 0.35);
   };
 
   const handleMouseLeave = () => {
@@ -240,78 +212,138 @@ function MagneticButton({
 }
 
 // ─── Nav ───────────────────────────────────────────────────────────────────────
+const NAV_LINKS = [
+  { label: "Capabilities", href: "#services" },
+  { label: "Deployments",  href: "#work"     },
+  { label: "Architecture", href: "#about"    },
+  { label: "Contact",      href: "#contact"  },
+];
+
 function Navbar() {
   const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 40);
+    const onScroll = () => setScrolled(window.scrollY > 50);
     window.addEventListener("scroll", onScroll);
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
   return (
-    <nav className={`navbar ${scrolled ? "scrolled" : ""}`} aria-label="Main navigation">
-      <div className="container flex items-center justify-between">
-        {/* Logo */}
+    <motion.nav
+      aria-label="Main navigation"
+      initial={{ opacity: 0, y: -24 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+      style={{ position: "fixed", top: 0, left: 0, right: 0, zIndex: 100 }}
+    >
+      {/* Outer padding shell — creates the floating gap */}
+      <div
+        style={{
+          maxWidth: "1200px",
+          margin: "0 auto",
+          padding: scrolled ? "10px 24px" : "18px 24px",
+          transition: "padding 0.4s ease",
+        }}
+      >
+        {/* Glassmorphic pill container */}
         <motion.div
-          initial={{ opacity: 0, x: -20 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.5 }}
-          className="flex items-center gap-2"
+          animate={{
+            backgroundColor: scrolled ? "rgba(10,10,10,0.88)" : "rgba(10,10,10,0.50)",
+            borderColor: scrolled ? "rgba(255,255,255,0.12)" : "rgba(255,255,255,0.07)",
+            boxShadow: scrolled
+              ? "0 8px 40px rgba(0,0,0,0.5), 0 0 0 1px rgba(99,91,255,0.1)"
+              : "0 4px 20px rgba(0,0,0,0.3)",
+          }}
+          transition={{ duration: 0.35, ease: "easeOut" }}
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+            padding: "12px 20px",
+            borderRadius: "16px",
+            border: "1px solid rgba(255,255,255,0.07)",
+            backdropFilter: "blur(24px)",
+            WebkitBackdropFilter: "blur(24px)",
+          }}
         >
-          <div
-            className="w-8 h-8 rounded-lg flex items-center justify-center"
-            style={{ background: "var(--accent)" }}
-            aria-hidden="true"
+          {/* ── Brand + status ── */}
+          <motion.div
+            initial={{ opacity: 0, x: -16 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.5, delay: 0.1 }}
+            className="flex items-center gap-3"
           >
-            <Zap size={16} color="#fff" fill="#fff" />
-          </div>
-          <span className="font-bold text-xl tracking-tight" style={{ color: "var(--text-primary)" }}>
-            HUZ<span style={{ color: "var(--accent)" }}>.</span>
-          </span>
-        </motion.div>
-
-        {/* Links */}
-        <motion.div
-          initial={{ opacity: 0, y: -10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.1 }}
-          className="hidden md:flex items-center gap-8"
-        >
-          {["Services", "Work", "About", "Contact"].map((item) => (
-            <a
-              key={item}
-              href={`#${item.toLowerCase()}`}
-              className="text-sm font-medium transition-colors duration-200"
-              style={{ color: "var(--text-secondary)" }}
-              onMouseEnter={(e) =>
-                (e.currentTarget.style.color = "var(--text-primary)")
-              }
-              onMouseLeave={(e) =>
-                (e.currentTarget.style.color = "var(--text-secondary)")
-              }
+            {/* Logo mark */}
+            <div
+              style={{
+                width: 32, height: 32, borderRadius: 10,
+                background: "linear-gradient(135deg, #635BFF 0%, #a78bfa 100%)",
+                display: "flex", alignItems: "center", justifyContent: "center",
+                boxShadow: "0 0 16px rgba(99,91,255,0.45)",
+                flexShrink: 0,
+              }}
+              aria-hidden="true"
             >
-              {item}
-            </a>
-          ))}
-        </motion.div>
+              <Zap size={15} color="#fff" fill="#fff" />
+            </div>
 
-        {/* CTA */}
-        <motion.div
-          initial={{ opacity: 0, x: 20 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.5, delay: 0.2 }}
-        >
-          <a
-            href="#contact"
-            id="nav-cta"
-            className="btn-secondary text-sm py-2 px-5 hidden md:inline-flex"
+            {/* Wordmark */}
+            <span
+              style={{ fontWeight: 800, fontSize: "1.15rem", letterSpacing: "-0.03em", color: "var(--text-primary)" }}
+            >
+              HUZ<span style={{ color: "var(--accent)" }}>.</span>
+            </span>
+
+            {/* Live status badge */}
+            <div
+              className="hidden sm:flex items-center gap-1.5"
+              style={{
+                padding: "3px 10px",
+                borderRadius: 100,
+                background: "rgba(34,197,94,0.08)",
+                border: "1px solid rgba(34,197,94,0.2)",
+                fontSize: "0.68rem",
+                fontWeight: 500,
+                color: "#4ade80",
+                letterSpacing: "0.04em",
+                textTransform: "uppercase",
+              }}
+              aria-label="System status: operational"
+            >
+              <span className="nav-status-dot" aria-hidden="true" />
+              Systems Operational
+            </div>
+          </motion.div>
+
+          {/* ── Nav links ── */}
+          <motion.div
+            initial={{ opacity: 0, y: -8 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.15 }}
+            className="hidden md:flex items-center gap-1"
           >
-            Get in touch
-          </a>
+            {NAV_LINKS.map((link) => (
+              <a key={link.label} href={link.href} className="nav-link">
+                {link.label}
+              </a>
+            ))}
+          </motion.div>
+
+          {/* ── CTA ── */}
+          <motion.div
+            initial={{ opacity: 0, x: 16 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.5, delay: 0.2 }}
+            className="hidden md:block"
+          >
+            <MagneticButton id="nav-cta" href="#contact" className="text-sm !py-2.5 !px-5">
+              Launch Project
+              <ArrowRight size={14} />
+            </MagneticButton>
+          </motion.div>
         </motion.div>
       </div>
-    </nav>
+    </motion.nav>
   );
 }
 
@@ -320,61 +352,49 @@ const services = [
   {
     icon: Globe,
     title: "Web Development",
-    description:
-      "Blazing-fast, production-grade web apps built with Next.js, TypeScript, and modern tooling — engineered for scale.",
+    description: "Blazing-fast, production-grade web apps built with Next.js, TypeScript, and modern tooling — engineered for scale.",
     tag: "Core",
     accent: "#635BFF",
   },
   {
     icon: Bot,
     title: "AI Automation",
-    description:
-      "Custom LLM pipelines, agentic workflows, and intelligent bots that automate repetitive processes end-to-end.",
+    description: "Custom LLM pipelines, agentic workflows, and intelligent bots that automate repetitive processes end-to-end.",
     tag: "Flagship",
     accent: "#a78bfa",
   },
   {
     icon: BarChart3,
     title: "Analytics & Insights",
-    description:
-      "Data-driven dashboards and real-time intelligence layers that surface what matters most to your business.",
+    description: "Data-driven dashboards and real-time intelligence layers that surface what matters most to your business.",
     tag: "Growth",
     accent: "#818cf8",
   },
   {
     icon: Code2,
     title: "API & Integrations",
-    description:
-      "Seamlessly connect your stack with third-party services, internal tools, and emerging AI APIs.",
+    description: "Seamlessly connect your stack with third-party services, internal tools, and emerging AI APIs.",
     tag: "Dev",
     accent: "#635BFF",
   },
   {
     icon: Layers,
     title: "Design Systems",
-    description:
-      "Scalable component libraries and design tokens that keep your product consistent across every touchpoint.",
+    description: "Scalable component libraries and design tokens that keep your product consistent across every touchpoint.",
     tag: "Design",
     accent: "#c4b5fd",
   },
   {
     icon: Sparkles,
     title: "AI Consulting",
-    description:
-      "Strategic guidance on implementing AI across your organisation — from opportunity mapping to production rollout.",
+    description: "Strategic guidance on implementing AI across your organisation — from opportunity mapping to production rollout.",
     tag: "Strategy",
     accent: "#a78bfa",
   },
 ];
 
 // ─── Bento Card ────────────────────────────────────────────────────────────────
-function BentoCard({
-  service,
-  index,
-}: {
-  service: (typeof services)[0];
-  index: number;
-}) {
+function BentoCard({ service, index }: { service: (typeof services)[0]; index: number }) {
   const Icon = service.icon;
   return (
     <motion.div
@@ -386,50 +406,29 @@ function BentoCard({
       role="article"
       aria-label={`${service.title} service`}
     >
-      {/* Icon */}
       <div
         className="w-12 h-12 rounded-xl flex items-center justify-center transition-all duration-300"
-        style={{
-          background: `${service.accent}18`,
-          border: `1px solid ${service.accent}30`,
-        }}
+        style={{ background: `${service.accent}18`, border: `1px solid ${service.accent}30` }}
       >
-        <Icon
-          size={22}
-          style={{ color: service.accent }}
-          className="transition-all duration-300 group-hover:scale-110"
-        />
+        <Icon size={22} style={{ color: service.accent }} className="transition-all duration-300 group-hover:scale-110" />
       </div>
 
-      {/* Badge */}
       <span
         className="badge w-fit"
-        style={{
-          background: `${service.accent}12`,
-          borderColor: `${service.accent}35`,
-          color: service.accent,
-        }}
+        style={{ background: `${service.accent}12`, borderColor: `${service.accent}35`, color: service.accent }}
       >
         {service.tag}
       </span>
 
-      {/* Content */}
       <div className="flex flex-col gap-2">
-        <h3
-          className="text-lg font-semibold tracking-tight"
-          style={{ color: "var(--text-primary)" }}
-        >
+        <h3 className="text-lg font-semibold tracking-tight" style={{ color: "var(--text-primary)" }}>
           {service.title}
         </h3>
-        <p
-          className="text-sm leading-relaxed"
-          style={{ color: "var(--text-secondary)" }}
-        >
+        <p className="text-sm leading-relaxed" style={{ color: "var(--text-secondary)" }}>
           {service.description}
         </p>
       </div>
 
-      {/* Learn more link */}
       <div className="mt-auto">
         <span
           className="flex items-center gap-1 text-sm font-medium transition-all duration-200 opacity-0 group-hover:opacity-100 translate-x-0 group-hover:translate-x-1"
@@ -446,8 +445,30 @@ function BentoCard({
 const stats = [
   { value: "50+", label: "Projects Delivered" },
   { value: "99%", label: "Client Satisfaction" },
-  { value: "3x", label: "Avg. Faster Time-to-Market" },
-  { value: "24/7", label: "AI Systems Uptime" },
+  { value: "3x",  label: "Avg. Faster Time-to-Market" },
+  { value: "24/7",label: "AI Systems Uptime" },
+];
+
+// ─── Footer data ───────────────────────────────────────────────────────────────
+const FOOTER_COLS = [
+  {
+    heading: "Capabilities",
+    links: ["Web Engineering", "AI Automation", "Custom Agents", "Performance Optimization"],
+  },
+  {
+    heading: "Company",
+    links: ["Architecture", "Case Studies", "Tech Stack", "Process"],
+  },
+  {
+    heading: "Resources",
+    links: ["Documentation", "Open Source", "Blog", "Changelog"],
+  },
+];
+
+const SOCIAL_LINKS = [
+  { Icon: GithubIcon,   href: "https://github.com",   label: "GitHub",     id: "footer-github"   },
+  { Icon: TwitterXIcon, href: "https://twitter.com",  label: "Twitter / X", id: "footer-twitter"  },
+  { Icon: LinkedinIcon, href: "https://linkedin.com", label: "LinkedIn",    id: "footer-linkedin" },
 ];
 
 // ─── Main Page ─────────────────────────────────────────────────────────────────
@@ -470,7 +491,6 @@ export default function Home() {
         >
           <div className="container">
             <div className="flex flex-col items-center text-center gap-10 max-w-6xl mx-auto">
-              {/* Eyebrow badge */}
               <motion.div
                 initial={{ opacity: 0, y: 16 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -482,10 +502,8 @@ export default function Home() {
                 </span>
               </motion.div>
 
-              {/* H1 — animated word reveal */}
               <AnimatedHeadline />
 
-              {/* Sub-headline */}
               <motion.p
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -498,7 +516,6 @@ export default function Home() {
                 and looking exceptional at every breakpoint.
               </motion.p>
 
-              {/* CTA Row */}
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -509,16 +526,11 @@ export default function Home() {
                   Start a Project
                   <ArrowRight size={18} />
                 </MagneticButton>
-                <a
-                  id="hero-cta-secondary"
-                  href="#services"
-                  className="btn-secondary"
-                >
+                <a id="hero-cta-secondary" href="#services" className="btn-secondary">
                   Explore Services
                 </a>
               </motion.div>
 
-              {/* Stats row */}
               <motion.div
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
@@ -535,16 +547,10 @@ export default function Home() {
                       transition={{ delay: 1.15 + i * 0.08, duration: 0.5 }}
                       className="flex flex-col gap-1"
                     >
-                      <span
-                        className="text-3xl font-bold tracking-tight"
-                        style={{ color: "var(--accent)" }}
-                      >
+                      <span className="text-3xl font-bold tracking-tight" style={{ color: "var(--accent)" }}>
                         {stat.value}
                       </span>
-                      <span
-                        className="text-sm"
-                        style={{ color: "var(--text-muted)" }}
-                      >
+                      <span className="text-sm" style={{ color: "var(--text-muted)" }}>
                         {stat.label}
                       </span>
                     </motion.div>
@@ -556,13 +562,8 @@ export default function Home() {
         </section>
 
         {/* ── SERVICES ──────────────────────────────────────────────────────── */}
-        <section
-          id="services"
-          className="section"
-          aria-labelledby="services-headline"
-        >
+        <section id="services" className="section" aria-labelledby="services-headline">
           <div className="container">
-            {/* Section header */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -583,16 +584,12 @@ export default function Home() {
                 <br />
                 <span className="glow-text">end-to-end.</span>
               </h2>
-              <p
-                className="text-base max-w-lg"
-                style={{ color: "var(--text-secondary)" }}
-              >
+              <p className="text-base max-w-lg" style={{ color: "var(--text-secondary)" }}>
                 From pixel-perfect UIs to production AI agents — we cover every
                 layer of the modern digital stack.
               </p>
             </motion.div>
 
-            {/* 3x2 Bento Grid */}
             <div
               className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5"
               role="list"
@@ -606,11 +603,7 @@ export default function Home() {
         </section>
 
         {/* ── CTA BAND ──────────────────────────────────────────────────────── */}
-        <section
-          id="contact"
-          className="section"
-          aria-labelledby="contact-headline"
-        >
+        <section id="contact" className="section" aria-labelledby="contact-headline">
           <div className="container">
             <motion.div
               initial={{ opacity: 0, y: 32 }}
@@ -619,18 +612,13 @@ export default function Home() {
               transition={{ duration: 0.6 }}
               className="bento-card p-12 md:p-16 text-center flex flex-col items-center gap-8"
               style={{
-                background:
-                  "linear-gradient(135deg, #1A1A1A 0%, #131320 50%, #1A1A1A 100%)",
+                background: "linear-gradient(135deg, #1A1A1A 0%, #131320 50%, #1A1A1A 100%)",
                 borderColor: "rgba(99, 91, 255, 0.25)",
               }}
             >
-              {/* Decorative glow */}
               <div
                 className="absolute inset-0 rounded-2xl pointer-events-none"
-                style={{
-                  background:
-                    "radial-gradient(ellipse at center top, rgba(99,91,255,0.12) 0%, transparent 60%)",
-                }}
+                style={{ background: "radial-gradient(ellipse at center top, rgba(99,91,255,0.12) 0%, transparent 60%)" }}
                 aria-hidden="true"
               />
 
@@ -644,30 +632,19 @@ export default function Home() {
                 className="text-4xl md:text-5xl font-bold tracking-tight relative z-10"
                 style={{ letterSpacing: "-0.025em" }}
               >
-                Ready to ship{" "}
-                <span className="glow-text">something great?</span>
+                Ready to ship <span className="glow-text">something great?</span>
               </h2>
 
-              <p
-                className="text-base max-w-lg relative z-10"
-                style={{ color: "var(--text-secondary)" }}
-              >
-                Drop us a line and let&apos;s talk about your next project. We
-                typically respond within 24 hours.
+              <p className="text-base max-w-lg relative z-10" style={{ color: "var(--text-secondary)" }}>
+                Drop us a line and let&apos;s talk about your next project. We typically respond within 24 hours.
               </p>
 
               <div className="flex flex-col sm:flex-row items-center gap-4 relative z-10">
-                <MagneticButton
-                  id="contact-cta-primary"
-                  href="mailto:hello@huzagency.com"
-                >
+                <MagneticButton id="contact-cta-primary" href="mailto:hello@huzagency.com">
                   <Mail size={18} />
                   Send us a message
                 </MagneticButton>
-                <span
-                  className="text-sm"
-                  style={{ color: "var(--text-muted)" }}
-                >
+                <span className="text-sm" style={{ color: "var(--text-muted)" }}>
                   hello@huzagency.com
                 </span>
               </div>
@@ -676,84 +653,189 @@ export default function Home() {
         </section>
       </main>
 
-      {/* ── FOOTER ──────────────────────────────────────────────────────────── */}
-      <footer
-        className="footer-gradient border-t"
-        style={{ borderColor: "var(--border)" }}
-        role="contentinfo"
-      >
-        <div className="container py-12 flex flex-col md:flex-row items-center justify-between gap-6">
-          {/* Brand */}
-          <div className="flex items-center gap-2">
-            <div
-              className="w-7 h-7 rounded-lg flex items-center justify-center"
-              style={{ background: "var(--accent)" }}
-              aria-hidden="true"
-            >
-              <Zap size={14} color="#fff" fill="#fff" />
+      {/* ════════════════════════════════════════════════════════════════════ */}
+      {/* FOOTER                                                              */}
+      {/* ════════════════════════════════════════════════════════════════════ */}
+      <footer role="contentinfo" style={{ borderTop: "1px solid var(--border)" }}>
+
+        {/* ─ Pre-footer CTA card ──────────────────────────────────────────── */}
+        <div className="container" style={{ paddingTop: 80, paddingBottom: 80 }}>
+          <motion.div
+            initial={{ opacity: 0, y: 32 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.65 }}
+            className="footer-cta-card"
+          >
+            <div className="footer-cta-glow" aria-hidden="true" />
+
+            <div className="relative z-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-8">
+              <div className="flex flex-col gap-3 max-w-xl">
+                <span className="badge w-fit">
+                  <Sparkles size={12} />
+                  Start a Conversation
+                </span>
+                <h2
+                  className="text-2xl md:text-3xl font-bold tracking-tight"
+                  style={{ letterSpacing: "-0.025em" }}
+                >
+                  Ready to automate your operations
+                  <br />
+                  and <span className="glow-text">scale your web footprint?</span>
+                </h2>
+                <p className="text-sm" style={{ color: "var(--text-secondary)" }}>
+                  Reach out directly — we respond within 24 hours.
+                </p>
+              </div>
+
+              <div className="flex flex-col items-start gap-3">
+                <MagneticButton id="footer-cta-btn" href="mailto:hello@huzagency.com">
+                  <Mail size={16} />
+                  Initiate Build
+                  <ArrowRight size={16} />
+                </MagneticButton>
+                <span className="text-xs" style={{ color: "var(--text-muted)" }}>
+                  hello@huzagency.com
+                </span>
+              </div>
             </div>
-            <span
-              className="font-bold text-lg tracking-tight"
-              style={{ color: "var(--text-primary)" }}
-            >
-              HUZ<span style={{ color: "var(--accent)" }}>.</span>
-            </span>
-          </div>
+          </motion.div>
+        </div>
 
-          {/* Copyright */}
-          <p className="text-sm" style={{ color: "var(--text-muted)" }}>
-            © {new Date().getFullYear()} HUZ Agency. All rights reserved.
-          </p>
+        {/* ─ Gradient divider ─────────────────────────────────────────────── */}
+        <div className="footer-divider" aria-hidden="true" />
 
-          {/* Social links */}
-          <div className="flex items-center gap-4" aria-label="Social links">
-            {[
-              {
-                Icon: GithubIcon,
-                href: "https://github.com",
-                label: "GitHub",
-                id: "footer-github",
-              },
-              {
-                Icon: TwitterXIcon,
-                href: "https://twitter.com",
-                label: "Twitter / X",
-                id: "footer-twitter",
-              },
-              {
-                Icon: LinkedinIcon,
-                href: "https://linkedin.com",
-                label: "LinkedIn",
-                id: "footer-linkedin",
-              },
-            ].map(({ Icon, href, label, id }) => (
-              <a
-                key={label}
-                id={id}
-                href={href}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label={label}
-                className="w-9 h-9 rounded-lg flex items-center justify-center transition-all duration-200"
-                style={{
-                  background: "var(--bg-card)",
-                  border: "1px solid var(--border)",
-                  color: "var(--text-muted)",
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.borderColor = "var(--border-accent)";
-                  e.currentTarget.style.color = "var(--accent)";
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.borderColor = "var(--border)";
-                  e.currentTarget.style.color = "var(--text-muted)";
-                }}
-              >
-                <Icon size={16} />
-              </a>
+        {/* ─ 4-column bento grid ──────────────────────────────────────────── */}
+        <div className="container" style={{ paddingTop: 56, paddingBottom: 56 }}>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-10">
+
+            {/* Col 1: Brand */}
+            <div className="col-span-2 md:col-span-1 flex flex-col gap-5">
+              <div className="flex items-center gap-2">
+                <div
+                  style={{
+                    width: 30, height: 30, borderRadius: 9,
+                    background: "linear-gradient(135deg, #635BFF 0%, #a78bfa 100%)",
+                    display: "flex", alignItems: "center", justifyContent: "center",
+                    boxShadow: "0 0 14px rgba(99,91,255,0.4)",
+                  }}
+                  aria-hidden="true"
+                >
+                  <Zap size={13} color="#fff" fill="#fff" />
+                </div>
+                <span style={{ fontWeight: 800, fontSize: "1.1rem", letterSpacing: "-0.03em", color: "var(--text-primary)" }}>
+                  HUZ<span style={{ color: "var(--accent)" }}>.</span>
+                </span>
+              </div>
+
+              <p className="text-sm leading-relaxed" style={{ color: "var(--text-secondary)" }}>
+                Engineered for speed,<br />built for scale.
+              </p>
+
+              <div className="flex items-center gap-2" aria-label="Social links">
+                {SOCIAL_LINKS.map(({ Icon, href, label, id }) => (
+                  <motion.a
+                    key={label}
+                    id={id}
+                    href={href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={label}
+                    className="footer-social-icon"
+                    whileHover={{ scale: 1.15, y: -2 }}
+                    whileTap={{ scale: 0.95 }}
+                    transition={{ type: "spring", stiffness: 400, damping: 17 }}
+                  >
+                    <Icon size={15} />
+                  </motion.a>
+                ))}
+              </div>
+            </div>
+
+            {/* Cols 2–4: Link groups */}
+            {FOOTER_COLS.map((col) => (
+              <div key={col.heading} className="flex flex-col gap-4">
+                <span
+                  className="text-xs font-semibold tracking-widest uppercase"
+                  style={{ color: "var(--text-muted)" }}
+                >
+                  {col.heading}
+                </span>
+                <ul className="flex flex-col gap-2.5">
+                  {col.links.map((link) => (
+                    <li key={link}>
+                      <a href="#" className="footer-link">{link}</a>
+                    </li>
+                  ))}
+                </ul>
+              </div>
             ))}
+
+            {/* Col 4: Contact & Status */}
+            <div className="flex flex-col gap-4">
+              <span
+                className="text-xs font-semibold tracking-widest uppercase"
+                style={{ color: "var(--text-muted)" }}
+              >
+                Contact
+              </span>
+              <div className="flex flex-col gap-3">
+                <a href="mailto:hello@huzagency.com" className="footer-link" id="footer-email">
+                  hello@huzagency.com
+                </a>
+                <p className="text-xs" style={{ color: "var(--text-muted)" }}>
+                  Response within 24h<br />Mon – Fri, 9am – 6pm UTC
+                </p>
+                <div
+                  className="flex items-center gap-1.5 w-fit"
+                  style={{
+                    padding: "4px 10px",
+                    borderRadius: 100,
+                    background: "rgba(34,197,94,0.08)",
+                    border: "1px solid rgba(34,197,94,0.2)",
+                    fontSize: "0.68rem",
+                    fontWeight: 500,
+                    color: "#4ade80",
+                    letterSpacing: "0.04em",
+                    textTransform: "uppercase",
+                  }}
+                >
+                  <span className="nav-status-dot" aria-hidden="true" />
+                  All Systems Nominal
+                </div>
+              </div>
+            </div>
+
           </div>
         </div>
+
+        {/* ─ Bottom bar ───────────────────────────────────────────────────── */}
+        <div className="footer-divider" aria-hidden="true" />
+        <div className="container">
+          <div
+            className="flex flex-col sm:flex-row items-center justify-between gap-3"
+            style={{ paddingTop: 20, paddingBottom: 20 }}
+          >
+            <p className="text-xs" style={{ color: "var(--text-muted)" }}>
+              &copy; {new Date().getFullYear()} HUZ Agency. All rights reserved.
+            </p>
+            <div className="flex items-center gap-5">
+              {["Privacy Policy", "Terms of Service"].map((item) => (
+                <a
+                  key={item}
+                  href="#"
+                  className="text-xs transition-colors duration-200"
+                  style={{ color: "var(--text-muted)" }}
+                  onMouseEnter={(e) => (e.currentTarget.style.color = "var(--text-secondary)")}
+                  onMouseLeave={(e) => (e.currentTarget.style.color = "var(--text-muted)")}
+                >
+                  {item}
+                </a>
+              ))}
+            </div>
+          </div>
+        </div>
+
       </footer>
     </>
   );
