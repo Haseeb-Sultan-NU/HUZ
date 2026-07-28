@@ -14,6 +14,7 @@ import {
   ChevronRight,
   Mail,
 } from "lucide-react";
+import CompanyMarquee from "@/components/CompanyMarquee";
 
 // Inline SVG brand icons (lucide-react v1+ removed brand icons)
 const GithubIcon = ({ size = 16 }: { size?: number }) => (
@@ -560,6 +561,9 @@ export default function Home() {
             </div>
           </div>
         </section>
+
+        {/* ── MARQUEE ──────────────────────────────────────────────────────── */}
+        <CompanyMarquee />
 
         {/* ── SERVICES ──────────────────────────────────────────────────────── */}
         <section id="services" className="section" aria-labelledby="services-headline">

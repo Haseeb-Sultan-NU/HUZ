@@ -320,3 +320,145 @@ body {
 .footer-link:hover {
   color: var(--text-primary);
 }
+
+/* ─── Marquee / Logo ticker ───────────────────────────────────────────────── */
+
+/* Section wrapper */
+.marquee-section {
+  position: relative;
+  z-index: 1;
+  padding: 56px 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  overflow: hidden;
+}
+
+/* Label above ticker */
+.marquee-label {
+  text-align: center;
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 0.68rem;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.28);
+  margin-bottom: 36px;
+  padding: 0 24px;
+}
+
+/* Outer wrapper that holds the track + fade masks */
+.marquee-track-wrapper {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+}
+
+/* Left/right gradient fade masks */
+.marquee-fade {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 160px;
+  z-index: 10;
+  pointer-events: none;
+}
+
+.marquee-fade-left {
+  left: 0;
+  background: linear-gradient(to right, #0A0A0A 0%, transparent 100%);
+}
+
+.marquee-fade-right {
+  right: 0;
+  background: linear-gradient(to left, #0A0A0A 0%, transparent 100%);
+}
+
+/* The clipping container */
+.marquee-track {
+  overflow: hidden;
+  width: 100%;
+}
+
+/* The inner strip that moves — width must be auto so it never wraps */
+.marquee-inner {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  width: max-content;
+  animation: marquee-scroll 38s linear infinite;
+  will-change: transform;
+}
+
+/* Pause on hover for accessibility */
+.marquee-track-wrapper:hover .marquee-inner {
+  animation-play-state: paused;
+}
+
+@keyframes marquee-scroll {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+/* Each logo card */
+.marquee-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  padding: 10px 36px;
+  cursor: default;
+  white-space: nowrap;
+  opacity: 0.38;
+  filter: grayscale(1);
+  transition:
+    opacity 0.35s ease,
+    filter 0.35s ease,
+    transform 0.3s ease;
+}
+
+.marquee-item:hover {
+  opacity: 1;
+  filter: grayscale(0);
+  transform: scale(1.06);
+}
+
+/* Icon wrapper */
+.marquee-icon {
+  display: inline-flex;
+  align-items: center;
+  color: #fff;
+  transition: filter 0.35s ease;
+}
+
+.marquee-item:hover .marquee-icon {
+  filter: drop-shadow(0 0 6px rgba(99, 91, 255, 0.7))
+          drop-shadow(0 0 14px rgba(167, 139, 250, 0.35));
+}
+
+/* Company name text */
+.marquee-name {
+  font-size: 0.92rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: #fff;
+  transition: text-shadow 0.35s ease;
+}
+
+.marquee-item:hover .marquee-name {
+  text-shadow: 0 0 12px rgba(99, 91, 255, 0.6);
+}
+
+/* Vertical separator dot between items */
+.marquee-item + .marquee-item::before {
+  content: '·';
+  position: absolute;
+  margin-left: -18px;
+  color: rgba(255,255,255,0.1);
+  pointer-events: none;
+}
+
+/* Reduced motion: disable animation for accessibility */
+@media (prefers-reduced-motion: reduce) {
+  .marquee-inner {
+    animation: none;
+  }
+}
