@@ -5,16 +5,11 @@ import { motion, useMotionValue, useSpring } from "framer-motion";
 import {
   ArrowRight,
   Zap,
-  Globe,
-  Bot,
-  BarChart3,
-  Code2,
-  Layers,
   Sparkles,
-  ChevronRight,
   Mail,
 } from "lucide-react";
 import CompanyMarquee from "@/components/CompanyMarquee";
+import ServicesSection from "@/components/ServicesSection";
 
 // Inline SVG brand icons (lucide-react v1+ removed brand icons)
 const GithubIcon = ({ size = 16 }: { size?: number }) => (
@@ -348,99 +343,6 @@ function Navbar() {
   );
 }
 
-// ─── Services Data ─────────────────────────────────────────────────────────────
-const services = [
-  {
-    icon: Globe,
-    title: "Web Development",
-    description: "Blazing-fast, production-grade web apps built with Next.js, TypeScript, and modern tooling — engineered for scale.",
-    tag: "Core",
-    accent: "#635BFF",
-  },
-  {
-    icon: Bot,
-    title: "AI Automation",
-    description: "Custom LLM pipelines, agentic workflows, and intelligent bots that automate repetitive processes end-to-end.",
-    tag: "Flagship",
-    accent: "#a78bfa",
-  },
-  {
-    icon: BarChart3,
-    title: "Analytics & Insights",
-    description: "Data-driven dashboards and real-time intelligence layers that surface what matters most to your business.",
-    tag: "Growth",
-    accent: "#818cf8",
-  },
-  {
-    icon: Code2,
-    title: "API & Integrations",
-    description: "Seamlessly connect your stack with third-party services, internal tools, and emerging AI APIs.",
-    tag: "Dev",
-    accent: "#635BFF",
-  },
-  {
-    icon: Layers,
-    title: "Design Systems",
-    description: "Scalable component libraries and design tokens that keep your product consistent across every touchpoint.",
-    tag: "Design",
-    accent: "#c4b5fd",
-  },
-  {
-    icon: Sparkles,
-    title: "AI Consulting",
-    description: "Strategic guidance on implementing AI across your organisation — from opportunity mapping to production rollout.",
-    tag: "Strategy",
-    accent: "#a78bfa",
-  },
-];
-
-// ─── Bento Card ────────────────────────────────────────────────────────────────
-function BentoCard({ service, index }: { service: (typeof services)[0]; index: number }) {
-  const Icon = service.icon;
-  return (
-    <motion.div
-      initial={{ opacity: 0, y: 32 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-60px" }}
-      transition={{ duration: 0.5, delay: index * 0.08, ease: "easeOut" }}
-      className="bento-card p-8 flex flex-col gap-5 group cursor-default"
-      role="article"
-      aria-label={`${service.title} service`}
-    >
-      <div
-        className="w-12 h-12 rounded-xl flex items-center justify-center transition-all duration-300"
-        style={{ background: `${service.accent}18`, border: `1px solid ${service.accent}30` }}
-      >
-        <Icon size={22} style={{ color: service.accent }} className="transition-all duration-300 group-hover:scale-110" />
-      </div>
-
-      <span
-        className="badge w-fit"
-        style={{ background: `${service.accent}12`, borderColor: `${service.accent}35`, color: service.accent }}
-      >
-        {service.tag}
-      </span>
-
-      <div className="flex flex-col gap-2">
-        <h3 className="text-lg font-semibold tracking-tight" style={{ color: "var(--text-primary)" }}>
-          {service.title}
-        </h3>
-        <p className="text-sm leading-relaxed" style={{ color: "var(--text-secondary)" }}>
-          {service.description}
-        </p>
-      </div>
-
-      <div className="mt-auto">
-        <span
-          className="flex items-center gap-1 text-sm font-medium transition-all duration-200 opacity-0 group-hover:opacity-100 translate-x-0 group-hover:translate-x-1"
-          style={{ color: service.accent }}
-        >
-          Learn more <ChevronRight size={14} />
-        </span>
-      </div>
-    </motion.div>
-  );
-}
 
 // ─── Stats ─────────────────────────────────────────────────────────────────────
 const stats = [
@@ -566,45 +468,8 @@ export default function Home() {
         <CompanyMarquee />
 
         {/* ── SERVICES ──────────────────────────────────────────────────────── */}
-        <section id="services" className="section" aria-labelledby="services-headline">
-          <div className="container">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5 }}
-              className="flex flex-col gap-4 mb-16"
-            >
-              <span className="badge w-fit">
-                <Layers size={12} />
-                What We Do
-              </span>
-              <h2
-                id="services-headline"
-                className="text-4xl md:text-5xl font-bold tracking-tight"
-                style={{ letterSpacing: "-0.025em" }}
-              >
-                Full-stack expertise,
-                <br />
-                <span className="glow-text">end-to-end.</span>
-              </h2>
-              <p className="text-base max-w-lg" style={{ color: "var(--text-secondary)" }}>
-                From pixel-perfect UIs to production AI agents — we cover every
-                layer of the modern digital stack.
-              </p>
-            </motion.div>
+        <ServicesSection />
 
-            <div
-              className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5"
-              role="list"
-              aria-label="Services offered by HUZ"
-            >
-              {services.map((service, i) => (
-                <BentoCard key={service.title} service={service} index={i} />
-              ))}
-            </div>
-          </div>
-        </section>
 
         {/* ── CTA BAND ──────────────────────────────────────────────────────── */}
         <section id="contact" className="section" aria-labelledby="contact-headline">
