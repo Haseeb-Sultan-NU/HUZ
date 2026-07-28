@@ -3,7 +3,7 @@
 import React, { useRef } from "react";
 import { motion } from "framer-motion";
 import {
-  Bot,
+  Cpu,
   Globe,
   BarChart3,
   Code2,
@@ -120,10 +120,10 @@ export default function ServicesSection() {
           </p>
         </motion.div>
 
-        {/* ── Asymmetrical Bento Grid (3 Columns) ───────────────────────────────── */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {/* ── Card 1: AI Automation (Wide Flagship Card, spans 2 cols) ──────── */}
-          <BentoBox index={0} colSpan="md:col-span-2">
+        {/* ── Asymmetrical Bento Grid (6-Column Container for 50/50 Top Row & 33/33/33 Bottom Row) ── */}
+        <div className="grid grid-cols-1 md:grid-cols-6 gap-6">
+          {/* ── Card 1: AI Automation Systems (Flagship 50% Top Row, spans 3 cols) ──────── */}
+          <BentoBox index={0} colSpan="md:col-span-3">
             {/* Texture: Dot-matrix pattern + pulsing violet radial glow */}
             <div
               className="absolute inset-0 pointer-events-none opacity-40"
@@ -155,33 +155,33 @@ export default function ServicesSection() {
                   border: "1px solid rgba(167, 139, 250, 0.3)",
                 }}
               >
-                <Bot size={24} className="text-[#a78bfa]" />
+                <Cpu size={24} className="text-[#a78bfa]" />
               </div>
-              <ServiceBadge label="Flagship" accent="#a78bfa" />
+              <ServiceBadge label="FLAGSHIP" accent="#a78bfa" />
             </div>
 
-            {/* Bottom Row: Content + CTA */}
-            <div className="relative z-10 flex flex-col md:flex-row md:items-end justify-between gap-6">
+            {/* Bottom Content + CTA */}
+            <div className="relative z-10 flex flex-col justify-between gap-6 h-full">
               <div className="flex flex-col gap-3 max-w-xl">
                 <h3 className="text-2xl md:text-3xl font-bold tracking-tight text-white">
-                  AI Automation &amp; Autonomous Agents
+                  AI Automation Systems
                 </h3>
                 <p className="text-base text-white/70 leading-relaxed">
-                  Custom LLM pipelines, self-healing agentic workflows, and
-                  multi-model cognitive architectures that automate complex operational
-                  loops end-to-end with enterprise reliability.
+                  We build smart, general AI systems that automate your repetitive
+                  tasks, saving you time and helping your business run smoothly
+                  without constant human oversight.
                 </p>
               </div>
 
               <div className="flex items-center gap-1 text-sm font-semibold text-[#a78bfa] transition-transform duration-200 group-hover:translate-x-1 shrink-0">
-                <span>Explore Architecture</span>
+                <span>Explore AI Systems</span>
                 <ArrowUpRight size={16} />
               </div>
             </div>
           </BentoBox>
 
-          {/* ── Card 2: Web Development (Vertical Hero Card, spans 1 col) ──────── */}
-          <BentoBox index={1} colSpan="md:col-span-1">
+          {/* ── Card 2: Web Development (Custom & WordPress) (Flagship 50% Top Row, spans 3 cols) ── */}
+          <BentoBox index={1} colSpan="md:col-span-3">
             {/* Texture: Architectural grid mesh + Illuminated top border highlight */}
             <div
               className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-[#635BFF] to-transparent opacity-80"
@@ -208,30 +208,31 @@ export default function ServicesSection() {
               >
                 <Globe size={24} className="text-[#635BFF]" />
               </div>
-              <ServiceBadge label="Core" accent="#635BFF" />
+              <ServiceBadge label="FLAGSHIP" accent="#635BFF" />
             </div>
 
             {/* Bottom Content */}
             <div className="relative z-10 flex flex-col justify-between gap-6 h-full">
-              <div className="flex flex-col gap-3">
-                <h3 className="text-2xl font-bold tracking-tight text-white">
-                  High-Velocity Web Engineering
+              <div className="flex flex-col gap-3 max-w-xl">
+                <h3 className="text-2xl md:text-3xl font-bold tracking-tight text-white">
+                  Web Development (Custom &amp; WordPress)
                 </h3>
-                <p className="text-sm text-white/70 leading-relaxed">
-                  Blazing-fast, production-grade Next.js web applications and
-                  sub-second edge platforms engineered for resilience and scale.
+                <p className="text-base text-white/70 leading-relaxed">
+                  From high-performance custom coded applications to easy-to-manage
+                  WordPress sites, we build fast, reliable websites designed to grow
+                  with your business and drive sales.
                 </p>
               </div>
 
-              <div className="flex items-center gap-1 text-sm font-semibold text-[#635BFF] transition-transform duration-200 group-hover:translate-x-1">
-                <span>View Tech Stack</span>
-                <ChevronRight size={16} />
+              <div className="flex items-center gap-1 text-sm font-semibold text-[#635BFF] transition-transform duration-200 group-hover:translate-x-1 shrink-0">
+                <span>Explore Web Dev</span>
+                <ArrowUpRight size={16} />
               </div>
             </div>
           </BentoBox>
 
-          {/* ── Card 3: Analytics & Insights (spans 1 col) ─────────────────────── */}
-          <BentoBox index={2} colSpan="md:col-span-1">
+          {/* ── Card 3: Data & Analytics (Bottom Row, spans 2 cols = 33.3%) ───────── */}
+          <BentoBox index={2} colSpan="md:col-span-2">
             {/* Texture: Faint animated vector bar chart graphic in bottom corner */}
             <div
               className="absolute -right-4 -bottom-4 pointer-events-none opacity-20 group-hover:opacity-30 transition-opacity duration-300"
@@ -263,30 +264,30 @@ export default function ServicesSection() {
               >
                 <BarChart3 size={24} className="text-[#818cf8]" />
               </div>
-              <ServiceBadge label="Growth" accent="#818cf8" />
+              <ServiceBadge label="GROWTH" accent="#818cf8" />
             </div>
 
             {/* Content */}
-            <div className="relative z-10 flex flex-col justify-between gap-6">
+            <div className="relative z-10 flex flex-col justify-between gap-6 h-full">
               <div className="flex flex-col gap-2">
                 <h3 className="text-xl font-bold tracking-tight text-white">
-                  Analytics &amp; Intelligence Layers
+                  Data &amp; Analytics
                 </h3>
                 <p className="text-sm text-white/70 leading-relaxed">
-                  Real-time observability pipelines, bespoke dashboards, and
-                  predictive analytics that turn unstructured data into clarity.
+                  Easy-to-understand dashboards that show exactly how your business
+                  is performing in real-time, helping you make better decisions.
                 </p>
               </div>
 
               <div className="flex items-center gap-1 text-sm font-semibold text-[#818cf8] transition-transform duration-200 group-hover:translate-x-1">
-                <span>Explore Metrics</span>
+                <span>Learn more</span>
                 <ChevronRight size={16} />
               </div>
             </div>
           </BentoBox>
 
-          {/* ── Card 4: API & Integrations (spans 1 col) ───────────────────────── */}
-          <BentoBox index={3} colSpan="md:col-span-1">
+          {/* ── Card 4: Software Integration (Bottom Row, spans 2 cols = 33.3%) ────── */}
+          <BentoBox index={3} colSpan="md:col-span-2">
             {/* Texture: Styled terminal code snippet faded in background */}
             <div
               className="absolute inset-0 p-6 pointer-events-none opacity-10 font-mono text-xs overflow-hidden select-none flex flex-col justify-end text-right"
@@ -314,30 +315,30 @@ export default function ServicesSection() {
               >
                 <Code2 size={24} className="text-[#635BFF]" />
               </div>
-              <ServiceBadge label="Dev" accent="#635BFF" />
+              <ServiceBadge label="DEV" accent="#635BFF" />
             </div>
 
             {/* Content */}
-            <div className="relative z-10 flex flex-col justify-between gap-6">
+            <div className="relative z-10 flex flex-col justify-between gap-6 h-full">
               <div className="flex flex-col gap-2">
                 <h3 className="text-xl font-bold tracking-tight text-white">
-                  API &amp; System Integrations
+                  Software Integration
                 </h3>
                 <p className="text-sm text-white/70 leading-relaxed">
-                  Seamlessly connect legacy infrastructure, internal tooling, and
-                  emerging AI model APIs with high-throughput gateways.
+                  We connect all your favorite apps and software tools together
+                  so they share data automatically and work as one seamless system.
                 </p>
               </div>
 
               <div className="flex items-center gap-1 text-sm font-semibold text-[#635BFF] transition-transform duration-200 group-hover:translate-x-1">
-                <span>View Specs</span>
+                <span>Learn more</span>
                 <ChevronRight size={16} />
               </div>
             </div>
           </BentoBox>
 
-          {/* ── Card 5: Design Systems & AI Consulting (spans 1 col) ───────────── */}
-          <BentoBox index={4} colSpan="md:col-span-1">
+          {/* ── Card 5: UI/UX Design (Bottom Row, spans 2 cols = 33.3%) ───────────── */}
+          <BentoBox index={4} colSpan="md:col-span-2">
             {/* Texture: Overlapping geometric glass wireframe shapes in 3D perspective */}
             <div
               className="absolute -right-10 -bottom-10 pointer-events-none opacity-15 group-hover:opacity-25 transition-opacity duration-300"
@@ -382,23 +383,23 @@ export default function ServicesSection() {
                   <Sparkles size={18} className="text-[#a78bfa]" />
                 </div>
               </div>
-              <ServiceBadge label="Strategy" accent="#c4b5fd" />
+              <ServiceBadge label="DESIGN" accent="#c4b5fd" />
             </div>
 
             {/* Content */}
-            <div className="relative z-10 flex flex-col justify-between gap-6">
+            <div className="relative z-10 flex flex-col justify-between gap-6 h-full">
               <div className="flex flex-col gap-2">
                 <h3 className="text-xl font-bold tracking-tight text-white">
-                  Design Systems &amp; AI Consulting
+                  UI/UX Design
                 </h3>
                 <p className="text-sm text-white/70 leading-relaxed">
-                  Scalable design token architectures and executive AI roadmaps
-                  that unify product aesthetics with engineering speed.
+                  Clean, beautiful, and intuitive designs that make your
+                  customers love using your website or application.
                 </p>
               </div>
 
               <div className="flex items-center gap-1 text-sm font-semibold text-[#c4b5fd] transition-transform duration-200 group-hover:translate-x-1">
-                <span>Read Methodology</span>
+                <span>Learn more</span>
                 <ChevronRight size={16} />
               </div>
             </div>
