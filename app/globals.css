@@ -462,3 +462,79 @@ body {
     animation: none;
   }
 }
+
+/* ─── Contact Drawer ──────────────────────────────────────────────────────── */
+
+/* Lock body scroll when drawer is open */
+body.drawer-open {
+  overflow: hidden;
+}
+
+/* Form input base */
+.drawer-input {
+  width: 100%;
+  padding: 13px 16px;
+  background: #1A1A1A;
+  border: 1px solid rgba(255, 255, 255, 0.10);
+  border-radius: 12px;
+  color: var(--text-primary);
+  font-size: 0.9rem;
+  font-family: inherit;
+  outline: none;
+  transition: border-color 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
+}
+
+.drawer-input::placeholder {
+  color: var(--text-muted);
+  opacity: 0.7;
+}
+
+.drawer-input:focus {
+  border-color: #635BFF;
+  box-shadow: 0 0 0 3px rgba(99, 91, 255, 0.15), 0 0 20px rgba(99, 91, 255, 0.08);
+  background: #1e1e24;
+}
+
+/* Select override */
+.drawer-select {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  cursor: pointer;
+  padding-right: 42px;
+}
+
+.drawer-select option {
+  background: #1A1A1A;
+  color: var(--text-primary);
+}
+
+/* ── GPU-Accelerated Background Animations (Software Integration Hero) ────── */
+@keyframes float-slow {
+  0%, 100% {
+    transform: translate(-50%, -50%) translate3d(0, 0, 0) scale(1);
+  }
+  50% {
+    transform: translate(-50%, -50%) translate3d(0, -14px, 0) scale(1.05);
+  }
+}
+
+@keyframes pulse-glow {
+  0%, 100% {
+    opacity: 0.15;
+  }
+  50% {
+    opacity: 0.65;
+  }
+}
+
+.animate-float-slow {
+  animation: float-slow 7s ease-in-out infinite;
+  will-change: transform;
+}
+
+.animate-pulse-glow {
+  animation: pulse-glow 4s ease-in-out infinite;
+  will-change: opacity;
+}
+

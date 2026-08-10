@@ -7,8 +7,7 @@ import {
   Globe,
   BarChart3,
   Code2,
-  Layers,
-  Sparkles,
+  PenTool,
   ChevronRight,
   ArrowUpRight,
 } from "lucide-react";
@@ -110,13 +109,12 @@ export default function ServicesSection() {
             className="text-4xl md:text-5xl font-bold tracking-tight text-white"
             style={{ letterSpacing: "-0.025em" }}
           >
-            Engineered for speed.
+            Fewer bottlenecks.
             <br />
-            <span className="glow-text">Architected for autonomy.</span>
+            <span className="text-[#635BFF]">Infinite scalability.</span>
           </h2>
           <p className="text-base md:text-lg max-w-xl text-white/70">
-            From autonomous AI workflows to high-concurrency web platforms — our
-            asymmetrical architecture covers every layer of the modern digital stack.
+            We engineer bespoke digital systems that eliminate repetitive manual labor. Fast web apps to acquire users, and intelligent AI workflows to handle the rest.
           </p>
         </motion.div>
 
@@ -173,10 +171,10 @@ export default function ServicesSection() {
                 </p>
               </div>
 
-              <div className="flex items-center gap-1 text-sm font-semibold text-[#a78bfa] transition-transform duration-200 group-hover:translate-x-1 shrink-0">
+              <a href="/services/ai-automation" className="flex items-center gap-1 text-sm font-semibold text-[#a78bfa] transition-transform duration-200 group-hover:translate-x-1 shrink-0">
                 <span>Explore AI Systems</span>
                 <ArrowUpRight size={16} />
-              </div>
+              </a>
             </div>
           </BentoBox>
 
@@ -224,10 +222,10 @@ export default function ServicesSection() {
                 </p>
               </div>
 
-              <div className="flex items-center gap-1 text-sm font-semibold text-[#635BFF] transition-transform duration-200 group-hover:translate-x-1 shrink-0">
+              <a href="/services/web-development" className="flex items-center gap-1 text-sm font-semibold text-[#635BFF] transition-transform duration-200 group-hover:translate-x-1 shrink-0">
                 <span>Explore Web Dev</span>
                 <ArrowUpRight size={16} />
-              </div>
+              </a>
             </div>
           </BentoBox>
 
@@ -279,10 +277,10 @@ export default function ServicesSection() {
                 </p>
               </div>
 
-              <div className="flex items-center gap-1 text-sm font-semibold text-[#818cf8] transition-transform duration-200 group-hover:translate-x-1">
-                <span>Learn more</span>
-                <ChevronRight size={16} />
-              </div>
+              <a href="/services/data-analytics" className="flex items-center gap-1 text-sm font-semibold text-[#818cf8] transition-transform duration-200 group-hover:translate-x-1">
+                <span>Explore Analytics</span>
+                <ArrowUpRight size={16} />
+              </a>
             </div>
           </BentoBox>
 
@@ -330,10 +328,10 @@ export default function ServicesSection() {
                 </p>
               </div>
 
-              <div className="flex items-center gap-1 text-sm font-semibold text-[#635BFF] transition-transform duration-200 group-hover:translate-x-1">
-                <span>Learn more</span>
-                <ChevronRight size={16} />
-              </div>
+              <a href="/services/software-integration" className="flex items-center gap-1 text-sm font-semibold text-[#635BFF] transition-transform duration-200 group-hover:translate-x-1">
+                <span>Explore Integration</span>
+                <ArrowUpRight size={16} />
+              </a>
             </div>
           </BentoBox>
 
@@ -364,24 +362,14 @@ export default function ServicesSection() {
 
             {/* Top Row */}
             <div className="relative z-10 flex items-center justify-between gap-4 mb-10">
-              <div className="flex items-center gap-2">
-                <div
-                  className="w-12 h-12 rounded-2xl flex items-center justify-center transition-transform duration-300 group-hover:scale-110"
-                  style={{
-                    background: "rgba(196, 181, 253, 0.12)",
-                    border: "1px solid rgba(196, 181, 253, 0.3)",
-                  }}
-                >
-                  <Layers size={22} className="text-[#c4b5fd]" />
-                </div>
-                <div
-                  className="w-10 h-10 rounded-xl flex items-center justify-center -ml-4 border border-[#121212]"
-                  style={{
-                    background: "rgba(167, 139, 250, 0.2)",
-                  }}
-                >
-                  <Sparkles size={18} className="text-[#a78bfa]" />
-                </div>
+              <div
+                className="w-12 h-12 rounded-2xl flex items-center justify-center transition-transform duration-300 group-hover:scale-110"
+                style={{
+                  background: "rgba(196, 181, 253, 0.12)",
+                  border: "1px solid rgba(196, 181, 253, 0.3)",
+                }}
+              >
+                <PenTool size={22} className="text-[#c4b5fd]" />
               </div>
               <ServiceBadge label="DESIGN" accent="#c4b5fd" />
             </div>

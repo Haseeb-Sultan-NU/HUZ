@@ -10,32 +10,22 @@ import {
 } from "lucide-react";
 import CompanyMarquee from "@/components/CompanyMarquee";
 import ServicesSection from "@/components/ServicesSection";
+import ContactDrawer from "@/components/ContactDrawer";
+import ProcessTimeline from "@/components/ProcessTimeline";
+import FeaturedWork from "@/components/FeaturedWork";
+import WhyHuz from "@/components/WhyHuz";
+import FAQ from "@/components/FAQ";
+import Footer from "@/components/Footer";
 
-// Inline SVG brand icons (lucide-react v1+ removed brand icons)
-const GithubIcon = ({ size = 16 }: { size?: number }) => (
-  <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor">
-    <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z" />
-  </svg>
-);
 
-const TwitterXIcon = ({ size = 16 }: { size?: number }) => (
-  <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor">
-    <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
-  </svg>
-);
 
-const LinkedinIcon = ({ size = 16 }: { size?: number }) => (
-  <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor">
-    <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
-  </svg>
-);
 
 // ─── Animated Background ───────────────────────────────────────────────────────
 const ORBS = [
-  { size: 700, x: "10%",  y: "-15%", color: "rgba(99,91,255,0.22)",  dur: 22, delay: 0   },
-  { size: 480, x: "70%",  y: "30%",  color: "rgba(99,91,255,0.14)",  dur: 28, delay: -6  },
-  { size: 380, x: "40%",  y: "65%",  color: "rgba(167,139,250,0.10)",dur: 18, delay: -11 },
-  { size: 300, x: "-5%",  y: "55%",  color: "rgba(99,91,255,0.09)",  dur: 32, delay: -4  },
+  { size: 700, x: "10%", y: "-15%", color: "rgba(99,91,255,0.22)", dur: 22, delay: 0 },
+  { size: 480, x: "70%", y: "30%", color: "rgba(99,91,255,0.14)", dur: 28, delay: -6 },
+  { size: 380, x: "40%", y: "65%", color: "rgba(167,139,250,0.10)", dur: 18, delay: -11 },
+  { size: 300, x: "-5%", y: "55%", color: "rgba(99,91,255,0.09)", dur: 32, delay: -4 },
 ];
 
 const PARTICLES = Array.from({ length: 28 }, (_, i) => ({
@@ -121,54 +111,128 @@ function AnimatedBackground() {
 }
 
 // ─── Animated Headline ─────────────────────────────────────────────────────────
-const HEADLINE_WORDS = [
-  { text: "Intelligent",  gradient: false },
-  { text: "Automation.",  gradient: true  },
-  { text: "Flawless",     gradient: false },
-  { text: "Web",          gradient: false },
-  { text: "Execution.",   gradient: true  },
-];
-
 function AnimatedHeadline() {
   return (
     <motion.h1
       id="hero-headline"
-      className="flex flex-wrap justify-center gap-x-5 gap-y-2"
+      className="text-5xl md:text-6xl lg:text-7xl font-extrabold tracking-tight text-center text-white max-w-5xl mx-auto"
       style={{
-        fontSize: "clamp(3rem, 7vw, 6.5rem)",
-        fontWeight: 900,
-        lineHeight: 1.0,
-        letterSpacing: "-0.04em",
+        lineHeight: 1.1,
       }}
-      aria-label="Intelligent Automation. Flawless Web Execution."
+      aria-label="Stop doing manual work. Start scaling your web presence."
     >
-      {HEADLINE_WORDS.map((word, i) => (
-        <motion.span
-          key={i}
-          initial={{ opacity: 0, y: 40, filter: "blur(8px)" }}
-          animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-          transition={{ duration: 0.65, delay: 0.15 + i * 0.11, ease: [0.22, 1, 0.36, 1] }}
-          className={word.gradient ? "glow-text" : ""}
-          style={word.gradient ? {} : { color: "var(--text-primary)" }}
-        >
-          {word.text}
-        </motion.span>
-      ))}
+      <motion.span
+        className="inline-block"
+        initial={{ opacity: 0, y: 40, filter: "blur(8px)" }}
+        animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+        transition={{ duration: 0.65, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
+      >
+        Stop doing <span className="text-[#635BFF]">manual work.</span>
+      </motion.span>
+      <br className="hidden md:block" />
+      <motion.span
+        className="inline-block"
+        initial={{ opacity: 0, y: 40, filter: "blur(8px)" }}
+        animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+        transition={{ duration: 0.65, delay: 0.26, ease: [0.22, 1, 0.36, 1] }}
+      >
+        {" "}Start scaling your <span className="text-[#635BFF]">web presence.</span>
+      </motion.span>
     </motion.h1>
   );
 }
 
-// ─── Magnetic Button ───────────────────────────────────────────────────────────
+// ─── Hero Section ──────────────────────────────────────────────────────────────
+function HeroSection({ openDrawer }: { openDrawer: () => void }) {
+  return (
+    <section
+      id="hero"
+      className="relative overflow-hidden bg-[#0A0A0A]"
+      style={{ minHeight: "80vh", paddingTop: "200px", paddingBottom: "160px" }}
+      aria-labelledby="hero-headline"
+    >
+      {/* ── Static Ambient Glow ── */}
+      <div
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          background: `radial-gradient(circle at 50% 50%, rgba(99,91,255,0.1), transparent 50%)`,
+        }}
+        aria-hidden="true"
+      />
+
+      {/* ── Content ── */}
+      <div className="relative z-10 container">
+        <div className="flex flex-col items-center text-center max-w-6xl mx-auto">
+          <AnimatedHeadline />
+
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, delay: 0.75 }}
+            className="text-white/60 text-lg md:text-xl max-w-2xl mx-auto mt-6 text-center leading-relaxed"
+          >
+            Your business shouldn&apos;t be slowed down by repetitive tasks or a sluggish website. We engineer custom web apps and AI workflows that run your operations on autopilot.
+          </motion.p>
+
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.9 }}
+            className="flex justify-center gap-4 mt-10"
+          >
+            <MagneticButton id="hero-cta-primary" onClick={openDrawer} className="bg-[#635BFF] hover:bg-[#524be3] text-white">
+              Start a Project
+              <ArrowRight size={18} />
+            </MagneticButton>
+            <a id="hero-cta-secondary" href="#services" className="btn-secondary border border-white/10 bg-white/5 text-white hover:bg-white/10 flex items-center justify-center px-6 rounded-full font-medium transition-colors">
+              Explore Services
+            </a>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.8, delay: 1.1 }}
+            className="w-full mt-16"
+          >
+            <div className="accent-line mb-10" />
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+              {stats.map((stat, i) => (
+                <motion.div
+                  key={stat.label}
+                  initial={{ opacity: 0, y: 12 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 1.15 + i * 0.08, duration: 0.5 }}
+                  className="flex flex-col gap-1"
+                >
+                  <span className="text-3xl font-bold tracking-tight" style={{ color: "var(--accent)" }}>
+                    {stat.value}
+                  </span>
+                  <span className="text-sm" style={{ color: "var(--text-muted)" }}>
+                    {stat.label}
+                  </span>
+                </motion.div>
+              ))}
+            </div>
+          </motion.div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
 function MagneticButton({
   children,
   className = "",
   href,
   id,
+  onClick,
 }: {
   children: React.ReactNode;
   className?: string;
   href?: string;
   id?: string;
+  onClick?: () => void;
 }) {
   const ref = useRef<HTMLButtonElement & HTMLAnchorElement>(null);
   const x = useMotionValue(0);
@@ -200,7 +264,7 @@ function MagneticButton({
       onMouseLeave={handleMouseLeave}
       className={`btn-primary ${className}`}
       whileTap={{ scale: 0.97 }}
-      onClick={href ? () => window.open(href, "_blank") : undefined}
+      onClick={onClick ? onClick : href ? () => window.open(href, "_blank") : undefined}
     >
       {children}
     </motion.button>
@@ -210,12 +274,12 @@ function MagneticButton({
 // ─── Nav ───────────────────────────────────────────────────────────────────────
 const NAV_LINKS = [
   { label: "Capabilities", href: "#services" },
-  { label: "Deployments",  href: "#work"     },
-  { label: "Architecture", href: "#about"    },
-  { label: "Contact",      href: "#contact"  },
+  { label: "Deployments", href: "#work" },
+  { label: "Architecture", href: "#about" },
+  { label: "Contact", href: "#contact" },
 ];
 
-function Navbar() {
+function Navbar({ onLaunchProject }: { onLaunchProject: () => void }) {
   const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
@@ -290,25 +354,7 @@ function Navbar() {
               HUZ<span style={{ color: "var(--accent)" }}>.</span>
             </span>
 
-            {/* Live status badge */}
-            <div
-              className="hidden sm:flex items-center gap-1.5"
-              style={{
-                padding: "3px 10px",
-                borderRadius: 100,
-                background: "rgba(34,197,94,0.08)",
-                border: "1px solid rgba(34,197,94,0.2)",
-                fontSize: "0.68rem",
-                fontWeight: 500,
-                color: "#4ade80",
-                letterSpacing: "0.04em",
-                textTransform: "uppercase",
-              }}
-              aria-label="System status: operational"
-            >
-              <span className="nav-status-dot" aria-hidden="true" />
-              Systems Operational
-            </div>
+
           </motion.div>
 
           {/* ── Nav links ── */}
@@ -318,11 +364,17 @@ function Navbar() {
             transition={{ duration: 0.5, delay: 0.15 }}
             className="hidden md:flex items-center gap-1"
           >
-            {NAV_LINKS.map((link) => (
-              <a key={link.label} href={link.href} className="nav-link">
-                {link.label}
-              </a>
-            ))}
+            {NAV_LINKS.map((link) =>
+              link.label === "Contact" ? (
+                <button key={link.label} onClick={onLaunchProject} className="nav-link">
+                  {link.label}
+                </button>
+              ) : (
+                <a key={link.label} href={link.href} className="nav-link">
+                  {link.label}
+                </a>
+              )
+            )}
           </motion.div>
 
           {/* ── CTA ── */}
@@ -332,7 +384,7 @@ function Navbar() {
             transition={{ duration: 0.5, delay: 0.2 }}
             className="hidden md:block"
           >
-            <MagneticButton id="nav-cta" href="#contact" className="text-sm !py-2.5 !px-5">
+            <MagneticButton id="nav-cta" onClick={onLaunchProject} className="text-sm !py-2.5 !px-5">
               Launch Project
               <ArrowRight size={14} />
             </MagneticButton>
@@ -348,121 +400,36 @@ function Navbar() {
 const stats = [
   { value: "50+", label: "Projects Delivered" },
   { value: "99%", label: "Client Satisfaction" },
-  { value: "3x",  label: "Avg. Faster Time-to-Market" },
-  { value: "24/7",label: "AI Systems Uptime" },
+  { value: "3x", label: "Avg. Faster Time-to-Market" },
+  { value: "24/7", label: "AI Systems Uptime" },
 ];
 
-// ─── Footer data ───────────────────────────────────────────────────────────────
-const FOOTER_COLS = [
-  {
-    heading: "Capabilities",
-    links: ["Web Engineering", "AI Automation", "Custom Agents", "Performance Optimization"],
-  },
-  {
-    heading: "Company",
-    links: ["Architecture", "Case Studies", "Tech Stack", "Process"],
-  },
-  {
-    heading: "Resources",
-    links: ["Documentation", "Open Source", "Blog", "Changelog"],
-  },
-];
-
-const SOCIAL_LINKS = [
-  { Icon: GithubIcon,   href: "https://github.com",   label: "GitHub",     id: "footer-github"   },
-  { Icon: TwitterXIcon, href: "https://twitter.com",  label: "Twitter / X", id: "footer-twitter"  },
-  { Icon: LinkedinIcon, href: "https://linkedin.com", label: "LinkedIn",    id: "footer-linkedin" },
-];
 
 // ─── Main Page ─────────────────────────────────────────────────────────────────
 export default function Home() {
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+
+  const openDrawer = () => {
+    setIsDrawerOpen(true);
+    document.body.classList.add("drawer-open");
+  };
+
+  const closeDrawer = () => {
+    setIsDrawerOpen(false);
+    document.body.classList.remove("drawer-open");
+  };
+
   return (
     <>
       {/* Immersive interactive background */}
       <AnimatedBackground />
 
       {/* Navbar */}
-      <Navbar />
+      <Navbar onLaunchProject={openDrawer} />
 
       <main>
         {/* ── HERO ──────────────────────────────────────────────────────────── */}
-        <section
-          id="hero"
-          className="section"
-          style={{ paddingTop: "200px", paddingBottom: "160px" }}
-          aria-labelledby="hero-headline"
-        >
-          <div className="container">
-            <div className="flex flex-col items-center text-center gap-10 max-w-6xl mx-auto">
-              <motion.div
-                initial={{ opacity: 0, y: 16 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5 }}
-              >
-                <span className="badge">
-                  <Sparkles size={12} />
-                  AI-First Digital Agency
-                </span>
-              </motion.div>
-
-              <AnimatedHeadline />
-
-              <motion.p
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.7, delay: 0.75 }}
-                className="text-lg md:text-xl leading-relaxed max-w-3xl"
-                style={{ color: "var(--text-secondary)" }}
-              >
-                HUZ engineers high-performance web platforms and autonomous AI
-                systems for ambitious teams — shipping fast, scaling reliably,
-                and looking exceptional at every breakpoint.
-              </motion.p>
-
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.9 }}
-                className="flex flex-col sm:flex-row items-center gap-4"
-              >
-                <MagneticButton id="hero-cta-primary" href="#contact">
-                  Start a Project
-                  <ArrowRight size={18} />
-                </MagneticButton>
-                <a id="hero-cta-secondary" href="#services" className="btn-secondary">
-                  Explore Services
-                </a>
-              </motion.div>
-
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ duration: 0.8, delay: 1.1 }}
-                className="w-full mt-4"
-              >
-                <div className="accent-line mb-10" />
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-                  {stats.map((stat, i) => (
-                    <motion.div
-                      key={stat.label}
-                      initial={{ opacity: 0, y: 12 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: 1.15 + i * 0.08, duration: 0.5 }}
-                      className="flex flex-col gap-1"
-                    >
-                      <span className="text-3xl font-bold tracking-tight" style={{ color: "var(--accent)" }}>
-                        {stat.value}
-                      </span>
-                      <span className="text-sm" style={{ color: "var(--text-muted)" }}>
-                        {stat.label}
-                      </span>
-                    </motion.div>
-                  ))}
-                </div>
-              </motion.div>
-            </div>
-          </div>
-        </section>
+        <HeroSection openDrawer={openDrawer} />
 
         {/* ── MARQUEE ──────────────────────────────────────────────────────── */}
         <CompanyMarquee />
@@ -470,62 +437,23 @@ export default function Home() {
         {/* ── SERVICES ──────────────────────────────────────────────────────── */}
         <ServicesSection />
 
+        {/* ── PROCESS TIMELINE ────────────────────────────────────────────── */}
+        <ProcessTimeline />
 
-        {/* ── CTA BAND ──────────────────────────────────────────────────────── */}
-        <section id="contact" className="section" aria-labelledby="contact-headline">
-          <div className="container">
-            <motion.div
-              initial={{ opacity: 0, y: 32 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6 }}
-              className="bento-card p-12 md:p-16 text-center flex flex-col items-center gap-8"
-              style={{
-                background: "linear-gradient(135deg, #1A1A1A 0%, #131320 50%, #1A1A1A 100%)",
-                borderColor: "rgba(99, 91, 255, 0.25)",
-              }}
-            >
-              <div
-                className="absolute inset-0 rounded-2xl pointer-events-none"
-                style={{ background: "radial-gradient(ellipse at center top, rgba(99,91,255,0.12) 0%, transparent 60%)" }}
-                aria-hidden="true"
-              />
+        {/* ── FEATURED WORK / CASE STUDIES ────────────────────────────────── */}
+        <FeaturedWork />
 
-              <span className="badge relative z-10">
-                <Sparkles size={12} />
-                Let&apos;s Build Together
-              </span>
+        {/* ── WHY HUZ? ───────────────────────────────────────────────────── */}
+        <WhyHuz />
 
-              <h2
-                id="contact-headline"
-                className="text-4xl md:text-5xl font-bold tracking-tight relative z-10"
-                style={{ letterSpacing: "-0.025em" }}
-              >
-                Ready to ship <span className="glow-text">something great?</span>
-              </h2>
-
-              <p className="text-base max-w-lg relative z-10" style={{ color: "var(--text-secondary)" }}>
-                Drop us a line and let&apos;s talk about your next project. We typically respond within 24 hours.
-              </p>
-
-              <div className="flex flex-col sm:flex-row items-center gap-4 relative z-10">
-                <MagneticButton id="contact-cta-primary" href="mailto:hello@huzagency.com">
-                  <Mail size={18} />
-                  Send us a message
-                </MagneticButton>
-                <span className="text-sm" style={{ color: "var(--text-muted)" }}>
-                  hello@huzagency.com
-                </span>
-              </div>
-            </motion.div>
-          </div>
-        </section>
+        {/* ── FAQ ────────────────────────────────────────────────────────── */}
+        <FAQ />
       </main>
 
       {/* ════════════════════════════════════════════════════════════════════ */}
-      {/* FOOTER                                                              */}
+      {/* PRE-FOOTER CTA                                                              */}
       {/* ════════════════════════════════════════════════════════════════════ */}
-      <footer role="contentinfo" style={{ borderTop: "1px solid var(--border)" }}>
+      <section style={{ borderTop: "1px solid var(--border)" }}>
 
         {/* ─ Pre-footer CTA card ──────────────────────────────────────────── */}
         <div className="container" style={{ paddingTop: 80, paddingBottom: 80 }}>
@@ -558,7 +486,7 @@ export default function Home() {
               </div>
 
               <div className="flex flex-col items-start gap-3">
-                <MagneticButton id="footer-cta-btn" href="mailto:hello@huzagency.com">
+                <MagneticButton id="footer-cta-btn" onClick={openDrawer}>
                   <Mail size={16} />
                   Initiate Build
                   <ArrowRight size={16} />
@@ -571,141 +499,15 @@ export default function Home() {
           </motion.div>
         </div>
 
-        {/* ─ Gradient divider ─────────────────────────────────────────────── */}
-        <div className="footer-divider" aria-hidden="true" />
+      </section>
 
-        {/* ─ 4-column bento grid ──────────────────────────────────────────── */}
-        <div className="container" style={{ paddingTop: 56, paddingBottom: 56 }}>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-10">
+      {/* ════════════════════════════════════════════════════════════════════ */}
+      {/* GLOBAL FOOTER                                                       */}
+      {/* ════════════════════════════════════════════════════════════════════ */}
+      <Footer />
 
-            {/* Col 1: Brand */}
-            <div className="col-span-2 md:col-span-1 flex flex-col gap-5">
-              <div className="flex items-center gap-2">
-                <div
-                  style={{
-                    width: 30, height: 30, borderRadius: 9,
-                    background: "linear-gradient(135deg, #635BFF 0%, #a78bfa 100%)",
-                    display: "flex", alignItems: "center", justifyContent: "center",
-                    boxShadow: "0 0 14px rgba(99,91,255,0.4)",
-                  }}
-                  aria-hidden="true"
-                >
-                  <Zap size={13} color="#fff" fill="#fff" />
-                </div>
-                <span style={{ fontWeight: 800, fontSize: "1.1rem", letterSpacing: "-0.03em", color: "var(--text-primary)" }}>
-                  HUZ<span style={{ color: "var(--accent)" }}>.</span>
-                </span>
-              </div>
-
-              <p className="text-sm leading-relaxed" style={{ color: "var(--text-secondary)" }}>
-                Engineered for speed,<br />built for scale.
-              </p>
-
-              <div className="flex items-center gap-2" aria-label="Social links">
-                {SOCIAL_LINKS.map(({ Icon, href, label, id }) => (
-                  <motion.a
-                    key={label}
-                    id={id}
-                    href={href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label={label}
-                    className="footer-social-icon"
-                    whileHover={{ scale: 1.15, y: -2 }}
-                    whileTap={{ scale: 0.95 }}
-                    transition={{ type: "spring", stiffness: 400, damping: 17 }}
-                  >
-                    <Icon size={15} />
-                  </motion.a>
-                ))}
-              </div>
-            </div>
-
-            {/* Cols 2–4: Link groups */}
-            {FOOTER_COLS.map((col) => (
-              <div key={col.heading} className="flex flex-col gap-4">
-                <span
-                  className="text-xs font-semibold tracking-widest uppercase"
-                  style={{ color: "var(--text-muted)" }}
-                >
-                  {col.heading}
-                </span>
-                <ul className="flex flex-col gap-2.5">
-                  {col.links.map((link) => (
-                    <li key={link}>
-                      <a href="#" className="footer-link">{link}</a>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
-
-            {/* Col 4: Contact & Status */}
-            <div className="flex flex-col gap-4">
-              <span
-                className="text-xs font-semibold tracking-widest uppercase"
-                style={{ color: "var(--text-muted)" }}
-              >
-                Contact
-              </span>
-              <div className="flex flex-col gap-3">
-                <a href="mailto:hello@huzagency.com" className="footer-link" id="footer-email">
-                  hello@huzagency.com
-                </a>
-                <p className="text-xs" style={{ color: "var(--text-muted)" }}>
-                  Response within 24h<br />Mon – Fri, 9am – 6pm UTC
-                </p>
-                <div
-                  className="flex items-center gap-1.5 w-fit"
-                  style={{
-                    padding: "4px 10px",
-                    borderRadius: 100,
-                    background: "rgba(34,197,94,0.08)",
-                    border: "1px solid rgba(34,197,94,0.2)",
-                    fontSize: "0.68rem",
-                    fontWeight: 500,
-                    color: "#4ade80",
-                    letterSpacing: "0.04em",
-                    textTransform: "uppercase",
-                  }}
-                >
-                  <span className="nav-status-dot" aria-hidden="true" />
-                  All Systems Nominal
-                </div>
-              </div>
-            </div>
-
-          </div>
-        </div>
-
-        {/* ─ Bottom bar ───────────────────────────────────────────────────── */}
-        <div className="footer-divider" aria-hidden="true" />
-        <div className="container">
-          <div
-            className="flex flex-col sm:flex-row items-center justify-between gap-3"
-            style={{ paddingTop: 20, paddingBottom: 20 }}
-          >
-            <p className="text-xs" style={{ color: "var(--text-muted)" }}>
-              &copy; {new Date().getFullYear()} HUZ Agency. All rights reserved.
-            </p>
-            <div className="flex items-center gap-5">
-              {["Privacy Policy", "Terms of Service"].map((item) => (
-                <a
-                  key={item}
-                  href="#"
-                  className="text-xs transition-colors duration-200"
-                  style={{ color: "var(--text-muted)" }}
-                  onMouseEnter={(e) => (e.currentTarget.style.color = "var(--text-secondary)")}
-                  onMouseLeave={(e) => (e.currentTarget.style.color = "var(--text-muted)")}
-                >
-                  {item}
-                </a>
-              ))}
-            </div>
-          </div>
-        </div>
-
-      </footer>
+      {/* ── Contact Drawer ──────────────────────────────────────────────── */}
+      <ContactDrawer isOpen={isDrawerOpen} onClose={closeDrawer} />
     </>
   );
 }
