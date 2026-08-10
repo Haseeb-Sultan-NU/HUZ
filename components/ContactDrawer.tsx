@@ -1,8 +1,8 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useState } from "react";
 import { motion, AnimatePresence, type Variants } from "framer-motion";
-import { X, Send, Loader2, Upload, Mail, Phone, MessageCircle } from "lucide-react";
+import { X, Send, Loader2, Mail, Phone, MessageCircle } from "lucide-react";
 
 // ─── Types ──────────────────────────────────────────────────────────────────────
 interface ContactDrawerProps {
@@ -96,7 +96,7 @@ function PillField({
 
 // ─── Component ──────────────────────────────────────────────────────────────────
 export default function ContactDrawer({ isOpen, onClose }: ContactDrawerProps) {
-  const fileInputRef = useRef<HTMLInputElement>(null);
+
 
   const [formData, setFormData] = useState({
     name: "",
@@ -110,7 +110,7 @@ export default function ContactDrawer({ isOpen, onClose }: ContactDrawerProps) {
     projectDetails: "",
     referral: "",
   });
-  const [files, setFiles] = useState<File[]>([]);
+
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
 
@@ -124,40 +124,61 @@ export default function ContactDrawer({ isOpen, onClose }: ContactDrawerProps) {
     setFormData((prev) => ({ ...prev, [field]: value }));
   };
 
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files) {
-      setFiles(Array.from(e.target.files));
-    }
-  };
+
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
 
-    // Simulate API call — replace with your real endpoint
-    await new Promise((resolve) => setTimeout(resolve, 1500));
+    // Prepare the exact payload your Google Script expects
+    const payload = {
+      ...formData,
+      preferredContact: formData.contactMethod, // mapping front-end name to back-end name
+      attachments: "None"
+    };
 
-    setIsSubmitting(false);
-    setIsSubmitted(true);
-
-    // Reset after a brief delay so the user sees the success state
-    setTimeout(() => {
-      setIsSubmitted(false);
-      setFormData({
-        name: "",
-        email: "",
-        phone: "",
-        company: "",
-        services: "",
-        budget: "",
-        timeline: "",
-        contactMethod: "",
-        projectDetails: "",
-        referral: "",
+    try {
+      // Send the data to Google Sheets
+      const response = await fetch("https://script.google.com/macros/s/AKfycbzh2BTM6FJbm6Tzb0l1BZP8yJSUyv7QUyQHcJ8gtLh3dxR6-nRV5Rn8nJsWLTse8gDqFA/exec", {
+        method: "POST",
+        headers: {
+          "Content-Type": "text/plain;charset=utf-8",
+        },
+        body: JSON.stringify(payload),
       });
-      setFiles([]);
-      onClose();
-    }, 2400);
+
+      const result = await response.json();
+
+      if (result.status === "success") {
+        setIsSubmitting(false);
+        setIsSubmitted(true);
+
+        // Reset the form after a brief delay so the user sees the success state
+        setTimeout(() => {
+          setIsSubmitted(false);
+          setFormData({
+            name: "",
+            email: "",
+            phone: "",
+            company: "",
+            services: "",
+            budget: "",
+            timeline: "",
+            contactMethod: "",
+            projectDetails: "",
+            referral: "",
+          });
+
+          onClose();
+        }, 2400);
+      } else {
+        console.error("API Error:", result.message);
+        setIsSubmitting(false);
+      }
+    } catch (error) {
+      console.error("Form submission failed:", error);
+      setIsSubmitting(false);
+    }
   };
 
   const isPhoneRequired = formData.contactMethod === "phone" || formData.contactMethod === "whatsapp";
@@ -386,10 +407,9 @@ export default function ContactDrawer({ isOpen, onClose }: ContactDrawerProps) {
                           className={`
                             inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-medium
                             transition-all duration-200 cursor-pointer border
-                            ${
-                              isActive
-                                ? "bg-[#635BFF]/15 border-[#635BFF]/50 text-[#635BFF] shadow-[0_0_16px_rgba(99,91,255,0.15)]"
-                                : "bg-transparent border-white/10 text-text-secondary hover:bg-white/5 hover:border-white/20 hover:text-text-primary"
+                            ${isActive
+                              ? "bg-[#635BFF]/15 border-[#635BFF]/50 text-[#635BFF] shadow-[0_0_16px_rgba(99,91,255,0.15)]"
+                              : "bg-transparent border-white/10 text-text-secondary hover:bg-white/5 hover:border-white/20 hover:text-text-primary"
                             }
                           `}
                         >
@@ -408,7 +428,8 @@ export default function ContactDrawer({ isOpen, onClose }: ContactDrawerProps) {
                   </label>
                   <p className="text-[0.68rem] text-text-muted/60 mb-2 italic leading-snug">
                     Too tired to type? Leave this blank and we&apos;ll just
-                    interrogate you on the call.
+                    interrogate you on the call. (Got a project brief, Figma
+                    link, or Loom video? Drop the link here!)
                   </p>
                   <textarea
                     id="drawer-details"
@@ -421,57 +442,7 @@ export default function ContactDrawer({ isOpen, onClose }: ContactDrawerProps) {
                   />
                 </motion.div>
 
-                {/* Attach Files */}
-                <motion.div variants={fadeUpItem}>
-                  <label className={labelClasses}>Attach Files</label>
-                  <input
-                    ref={fileInputRef}
-                    type="file"
-                    multiple
-                    onChange={handleFileChange}
-                    className="hidden"
-                    id="drawer-file-upload"
-                  />
-                  <button
-                    type="button"
-                    onClick={() => fileInputRef.current?.click()}
-                    className="w-full flex flex-col items-center justify-center gap-2 py-5 px-4 rounded-xl border border-dashed border-white/10 bg-white/[0.02] cursor-pointer transition-all duration-200 hover:border-[#635BFF]/40 hover:bg-[#635BFF]/[0.04] group"
-                  >
-                    <div className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center group-hover:bg-[#635BFF]/10 transition-colors duration-200">
-                      <Upload
-                        size={18}
-                        className="text-text-muted group-hover:text-[#635BFF] transition-colors duration-200"
-                      />
-                    </div>
-                    <span className="text-xs text-text-muted group-hover:text-text-secondary transition-colors duration-200">
-                      Click to browse or drag files here
-                    </span>
-                  </button>
-                  {files.length > 0 && (
-                    <div className="mt-2 flex flex-wrap gap-2">
-                      {files.map((file, i) => (
-                        <span
-                          key={i}
-                          className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#635BFF]/10 border border-[#635BFF]/20 text-[0.7rem] text-[#635BFF]"
-                        >
-                          {file.name}
-                          <button
-                            type="button"
-                            onClick={() =>
-                              setFiles((prev) =>
-                                prev.filter((_, idx) => idx !== i)
-                              )
-                            }
-                            className="hover:text-white transition-colors"
-                            aria-label={`Remove ${file.name}`}
-                          >
-                            <X size={12} />
-                          </button>
-                        </span>
-                      ))}
-                    </div>
-                  )}
-                </motion.div>
+
 
                 {/* Referral */}
                 <PillField
