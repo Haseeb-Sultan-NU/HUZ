@@ -18,7 +18,7 @@ const geistMono = localFont({
 export const metadata: Metadata = {
   title: "HUZ Agency — Web Development & AI Automation",
   description:
-    "HUZ is a premium agency specializing in modern Web Development and AI Automation. We build intelligent digital products that scale.",
+    "Stop doing manual work. HUZ engineers lightning-fast web applications and custom AI workflows that put your business operations on autopilot.",
   keywords: [
     "web development",
     "AI automation",

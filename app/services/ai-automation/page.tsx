@@ -13,6 +13,8 @@ import {
   Mail,
   ChevronLeft,
 } from "lucide-react";
+import Image from "next/image";
+import Link from "next/link";
 import ContactDrawer from "@/components/ContactDrawer";
 
 // ─── Animated Background (lighter version for subpage) ──────────────────────────
@@ -279,34 +281,19 @@ function SubpageNav({ onLaunchProject }: { onLaunchProject: () => void }) {
               aria-hidden="true"
             />
 
-            <a href="/" className="flex items-center gap-2">
-              <div
-                style={{
-                  width: 30,
-                  height: 30,
-                  borderRadius: 9,
-                  background:
-                    "linear-gradient(135deg, #635BFF 0%, #a78bfa 100%)",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  boxShadow: "0 0 14px rgba(99,91,255,0.4)",
-                }}
-                aria-hidden="true"
-              >
-                <Zap size={13} color="#fff" fill="#fff" />
-              </div>
-              <span
-                style={{
-                  fontWeight: 800,
-                  fontSize: "1.05rem",
-                  letterSpacing: "-0.03em",
-                  color: "var(--text-primary)",
-                }}
-              >
-                HUZ<span style={{ color: "var(--accent)" }}>.</span>
+            <Link className="inline-flex items-center gap-3 group focus:outline-none" href="/">
+              <Image
+                alt="HUZ Logo"
+                className="h-7 w-auto object-contain transition-transform group-hover:scale-105"
+                height={32}
+                priority
+                src="/logo.png"
+                width={32}
+              />
+              <span className="text-xl md:text-2xl font-bold tracking-widest text-white select-none">
+                HUZ<span className="text-[#635BFF]">.</span>
               </span>
-            </a>
+            </Link>
           </div>
 
           {/* Right: CTA */}
@@ -726,33 +713,18 @@ export default function AIAutomationPage() {
             style={{ paddingTop: 24, paddingBottom: 24 }}
           >
             <div className="flex items-center gap-3">
-              <a href="/" className="flex items-center gap-2">
-                <div
-                  style={{
-                    width: 24,
-                    height: 24,
-                    borderRadius: 7,
-                    background:
-                      "linear-gradient(135deg, #635BFF 0%, #a78bfa 100%)",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                  }}
-                  aria-hidden="true"
-                >
-                  <Zap size={11} color="#fff" fill="#fff" />
-                </div>
-                <span
-                  style={{
-                    fontWeight: 800,
-                    fontSize: "0.95rem",
-                    letterSpacing: "-0.03em",
-                    color: "var(--text-primary)",
-                  }}
-                >
-                  HUZ<span style={{ color: "var(--accent)" }}>.</span>
+              <Link className="inline-flex items-center gap-3 group focus:outline-none" href="/">
+                <Image
+                  alt="HUZ Logo"
+                  className="h-7 w-auto object-contain transition-transform group-hover:scale-105"
+                  height={32}
+                  src="/logo.png"
+                  width={32}
+                />
+                <span className="text-xl md:text-2xl font-bold tracking-widest text-white select-none">
+                  HUZ<span className="text-[#635BFF]">.</span>
                 </span>
-              </a>
+              </Link>
               <span
                 className="text-xs"
                 style={{ color: "var(--text-muted)" }}

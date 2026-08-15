@@ -286,7 +286,7 @@ export default function ContactDrawer({ isOpen, onClose }: ContactDrawerProps) {
                       name="name"
                       type="text"
                       required
-                      placeholder="John Doe"
+                      placeholder="Alex Carter"
                       value={formData.name}
                       onChange={handleChange}
                       className={inputClasses}
@@ -303,7 +303,7 @@ export default function ContactDrawer({ isOpen, onClose }: ContactDrawerProps) {
                       name="email"
                       type="email"
                       required
-                      placeholder="john@company.com"
+                      placeholder="alex@acme.com"
                       value={formData.email}
                       onChange={handleChange}
                       className={inputClasses}
