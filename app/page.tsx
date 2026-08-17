@@ -1,10 +1,11 @@
 "use client";
 
 import { useRef, useState, useEffect } from "react";
+import Image from "next/image";
+import Link from "next/link";
 import { motion, useMotionValue, useSpring } from "framer-motion";
 import {
   ArrowRight,
-  Zap,
   Sparkles,
   Mail,
 } from "lucide-react";
@@ -333,26 +334,20 @@ function Navbar({ onLaunchProject }: { onLaunchProject: () => void }) {
             transition={{ duration: 0.5, delay: 0.1 }}
             className="flex items-center gap-3"
           >
-            {/* Logo mark */}
-            <div
-              style={{
-                width: 32, height: 32, borderRadius: 10,
-                background: "linear-gradient(135deg, #635BFF 0%, #a78bfa 100%)",
-                display: "flex", alignItems: "center", justifyContent: "center",
-                boxShadow: "0 0 16px rgba(99,91,255,0.45)",
-                flexShrink: 0,
-              }}
-              aria-hidden="true"
-            >
-              <Zap size={15} color="#fff" fill="#fff" />
-            </div>
-
-            {/* Wordmark */}
-            <span
-              style={{ fontWeight: 800, fontSize: "1.15rem", letterSpacing: "-0.03em", color: "var(--text-primary)" }}
-            >
-              HUZ<span style={{ color: "var(--accent)" }}>.</span>
-            </span>
+            {/* Logo + Wordmark */}
+            <Link className="inline-flex items-center gap-3 group focus:outline-none" href="/">
+              <Image
+                alt="HUZ Logo"
+                className="h-7 w-auto object-contain transition-transform group-hover:scale-105"
+                height={32}
+                priority
+                src="/logo.png"
+                width={32}
+              />
+              <span className="text-xl md:text-2xl font-bold tracking-widest text-white select-none">
+                HUZ<span className="text-[#635BFF]">.</span>
+              </span>
+            </Link>
 
 
           </motion.div>
@@ -491,9 +486,9 @@ export default function Home() {
                   Initiate Build
                   <ArrowRight size={16} />
                 </MagneticButton>
-                <span className="text-xs" style={{ color: "var(--text-muted)" }}>
-                  hello@huzagency.com
-                </span>
+                <a href="mailto:info@huzsolutions.com" className="text-xs hover:text-white transition-colors" style={{ color: "var(--text-muted)" }}>
+                  info@huzsolutions.com
+                </a>
               </div>
             </div>
           </motion.div>

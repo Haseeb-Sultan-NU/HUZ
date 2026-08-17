@@ -1,3 +1,30 @@
+"use client";
+
+import { useState } from "react";
+import Link from "next/link";
+import Image from "next/image";
+import ContactDrawer from "@/components/ContactDrawer";
+
+const SERVICES_LINKS = [
+  { name: "Web Development", href: "/#services" },
+  { name: "AI Automation", href: "/#services" },
+  { name: "Data & Analytics", href: "/#services" },
+  { name: "Software Integration", href: "/#services" },
+  { name: "UI/UX Design", href: "/#services" },
+];
+
+const AGENCY_LINKS = [
+  { name: "About Us", href: "/#about" },
+  { name: "Engineering Process", href: "/#process" },
+  { name: "Case Studies", href: "/#work" },
+  { name: "Contact", href: "#" }, // Managed by onClick handler now
+];
+
+const COMPLIANCE_LINKS = [
+  { name: "Privacy Policy", href: "/privacy-policy" },
+  { name: "Terms of Service", href: "/terms-of-service" },
+  { name: "Cookie Preferences", href: "/cookie-preferences" },
+];
 
 const TwitterXIcon = ({ size = 16 }: { size?: number }) => (
   <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor">
@@ -21,87 +48,120 @@ const InstagramIcon = ({ size = 16 }: { size?: number }) => (
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+
+  const openDrawer = () => {
+    setIsDrawerOpen(true);
+    document.body.classList.add("drawer-open");
+  };
+  const closeDrawer = () => {
+    setIsDrawerOpen(false);
+    document.body.classList.remove("drawer-open");
+  };
 
   return (
-    <footer className="bg-[#0A0A0A] pt-16 pb-8 border-t border-white/10">
-      <div className="container mx-auto px-4">
-        {/* Main Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-4 lg:grid-cols-5 gap-12 lg:gap-8">
-          
-          {/* Column 1: Brand & Mission */}
-          <div className="lg:col-span-2 flex flex-col gap-6">
-            <span className="text-2xl font-bold tracking-tight text-white">
-              HUZ<span className="text-[#635BFF]">.</span>
-            </span>
-            <p className="text-white/70 text-sm leading-relaxed max-w-sm">
-              Engineered for speed, built for scale. We deliver bespoke web platforms and autonomous AI systems that eliminate technical debt.
+    <>
+      <footer className="bg-[#0A0A0A] pt-16 pb-8 border-t border-white/10">
+        <div className="container mx-auto px-4">
+          {/* Main Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-4 lg:grid-cols-5 gap-12 lg:gap-8">
+            
+            {/* Column 1: Brand & Mission */}
+            <div className="lg:col-span-2 flex flex-col gap-6">
+              <Link className="inline-flex items-center gap-3 group focus:outline-none" href="/">
+                <Image
+                  alt="HUZ Logo"
+                  className="h-7 w-auto object-contain transition-transform group-hover:scale-105"
+                  height={32}
+                  priority
+                  src="/logo.png"
+                  width={32}
+                />
+                <span className="text-xl md:text-2xl font-bold tracking-widest text-white select-none">
+                  HUZ<span className="text-[#635BFF]">.</span>
+                </span>
+              </Link>
+              <p className="text-white/70 text-sm leading-relaxed max-w-sm">
+                Engineered for speed, built for scale. We deliver bespoke web platforms and autonomous AI systems that eliminate technical debt.
+              </p>
+              <a 
+                href="mailto:info@huzsolutions.com" 
+                className="block mt-6 mb-4 text-sm font-medium text-text-secondary hover:text-[#635BFF] transition-colors"
+              >
+                info@huzsolutions.com
+              </a>
+              <div className="flex items-center gap-4 mt-2">
+                {[TwitterXIcon, LinkedinIcon, InstagramIcon].map((Icon, idx) => (
+                  <a
+                    key={idx}
+                    href="#"
+                    className="text-white/50 hover:text-white transition-colors duration-300"
+                    aria-label="Social Link"
+                  >
+                    <Icon size={18} />
+                  </a>
+                ))}
+              </div>
+            </div>
+
+            {/* Column 2: Capabilities */}
+            <div className="flex flex-col gap-4">
+              <h4 className="text-white font-bold text-sm tracking-wide">Services</h4>
+              <ul className="flex flex-col gap-3">
+                {SERVICES_LINKS.map((link) => (
+                  <li key={link.name}>
+                    <Link href={link.href} className="text-sm text-white/70 hover:text-white transition-colors duration-300">{link.name}</Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* Column 3: Company */}
+            <div className="flex flex-col gap-4">
+              <h4 className="text-white font-bold text-sm tracking-wide">Agency</h4>
+              <ul className="flex flex-col gap-3">
+                {AGENCY_LINKS.map((link) => (
+                  <li key={link.name}>
+                    {link.name === "Contact" ? (
+                      <button onClick={openDrawer} className="text-sm text-white/70 hover:text-white transition-colors duration-300">{link.name}</button>
+                    ) : (
+                      <Link href={link.href} className="text-sm text-white/70 hover:text-white transition-colors duration-300">{link.name}</Link>
+                    )}
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* Column 4: Legal & Resources */}
+            <div className="flex flex-col gap-4">
+              <h4 className="text-white font-bold text-sm tracking-wide">Compliance</h4>
+              <ul className="flex flex-col gap-3">
+                {COMPLIANCE_LINKS.map((link) => (
+                  <li key={link.name}>
+                    <Link href={link.href} className="text-sm text-white/70 hover:text-white transition-colors duration-300">{link.name}</Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+          </div>
+
+          {/* Bottom Bar */}
+          <div className="mt-16 pt-8 border-t border-white/10 flex flex-col md:flex-row items-center justify-between gap-4">
+            <p className="text-sm text-white/70">
+              &copy; {currentYear} HUZ. All rights reserved.
             </p>
-            <div className="flex items-center gap-4 mt-2">
-              {[TwitterXIcon, LinkedinIcon, InstagramIcon].map((Icon, idx) => (
-                <a
-                  key={idx}
-                  href="#"
-                  className="text-white/50 hover:text-white transition-colors duration-300"
-                  aria-label="Social Link"
-                >
-                  <Icon size={18} />
-                </a>
-              ))}
+            <div className="flex items-center gap-2">
+              <span className="relative flex h-2 w-2">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
+              </span>
+              <span className="text-sm text-white/70">All services online.</span>
             </div>
           </div>
-
-          {/* Column 2: Capabilities */}
-          <div className="flex flex-col gap-4">
-            <h4 className="text-white font-bold text-sm tracking-wide">Services</h4>
-            <ul className="flex flex-col gap-3">
-              {["Web Development", "AI Automation", "Data & Analytics", "Software Integration", "UI/UX Design"].map((link) => (
-                <li key={link}>
-                  <a href="#" className="text-sm text-white/70 hover:text-white transition-colors duration-300">{link}</a>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Column 3: Company */}
-          <div className="flex flex-col gap-4">
-            <h4 className="text-white font-bold text-sm tracking-wide">Agency</h4>
-            <ul className="flex flex-col gap-3">
-              {["About Us", "Engineering Process", "Case Studies", "Contact"].map((link) => (
-                <li key={link}>
-                  <a href="#" className="text-sm text-white/70 hover:text-white transition-colors duration-300">{link}</a>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Column 4: Legal & Resources */}
-          <div className="flex flex-col gap-4">
-            <h4 className="text-white font-bold text-sm tracking-wide">Compliance</h4>
-            <ul className="flex flex-col gap-3">
-              {["Privacy Policy", "Terms of Service", "Cookie Preferences"].map((link) => (
-                <li key={link}>
-                  <a href="#" className="text-sm text-white/70 hover:text-white transition-colors duration-300">{link}</a>
-                </li>
-              ))}
-            </ul>
-          </div>
-
         </div>
-
-        {/* Bottom Bar */}
-        <div className="mt-16 pt-8 border-t border-white/10 flex flex-col md:flex-row items-center justify-between gap-4">
-          <p className="text-sm text-white/70">
-            &copy; {currentYear} HUZ. All rights reserved.
-          </p>
-          <div className="flex items-center gap-2">
-            <span className="relative flex h-2 w-2">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
-            </span>
-            <span className="text-sm text-white/70">All services online.</span>
-          </div>
-        </div>
-      </div>
-    </footer>
+      </footer>
+      <ContactDrawer isOpen={isDrawerOpen} onClose={closeDrawer} />
+    </>
   );
 }

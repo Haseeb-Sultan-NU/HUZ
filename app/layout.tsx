@@ -6,17 +6,19 @@ const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
   variable: "--font-geist-sans",
   weight: "100 900",
+  display: "swap",
 });
 const geistMono = localFont({
   src: "./fonts/GeistMonoVF.woff",
   variable: "--font-geist-mono",
   weight: "100 900",
+  display: "swap",
 });
 
 export const metadata: Metadata = {
   title: "HUZ Agency — Web Development & AI Automation",
   description:
-    "HUZ is a premium agency specializing in modern Web Development and AI Automation. We build intelligent digital products that scale.",
+    "Stop doing manual work. HUZ engineers lightning-fast web applications and custom AI workflows that put your business operations on autopilot.",
   keywords: [
     "web development",
     "AI automation",

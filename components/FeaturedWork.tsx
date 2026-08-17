@@ -1,12 +1,14 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import { motion, type Variants } from "framer-motion";
 import { Sparkles, ArrowRight } from "lucide-react";
 
 // ─── Case Study Data ────────────────────────────────────────────────────────────
 const CASE_STUDIES = [
   {
+    href: "/projects/pharmacy-system",
     tags: ["Full-Stack Systems", "Healthcare Infrastructure"],
     headline: "Enterprise Pharmacy Operating System",
     body: "Engineered a complete, production-ready management platform for a medical facility. We digitized their entire operational workflow, building secure, automated pipelines for complex inventory tracking, vendor management, and dynamic billing.",
@@ -16,6 +18,7 @@ const CASE_STUDIES = [
     accentOrb: "radial-gradient(ellipse 60% 60% at 30% 70%, rgba(99,91,255,0.25) 0%, transparent 70%)",
   },
   {
+    href: "/projects/triage-bot",
     tags: ["AI Automation", "NLP"],
     headline: "Autonomous Support Routing Pipeline",
     body: "Built an intelligent AI agent that reads, understands, and categorizes incoming customer support tickets in real-time. The system instantly routes urgent issues and drafts preliminary responses, drastically reducing manual triage time.",
@@ -25,6 +28,7 @@ const CASE_STUDIES = [
     accentOrb: "radial-gradient(ellipse 50% 50% at 70% 30%, rgba(167,139,250,0.20) 0%, transparent 70%)",
   },
   {
+    href: "/projects/credibility-engine",
     tags: ["Machine Learning", "Data Engineering"],
     headline: "AI-Powered Credibility Engine",
     body: "Developed an advanced machine learning pipeline designed to classify and combat digital misinformation at scale. By analyzing linguistic patterns across thousands of articles, the engine accurately clusters and flags unreliable data sources before they spread.",
@@ -453,7 +457,7 @@ function CaseStudyCard({
       variants={cardFade}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
-      className={`group relative rounded-2xl overflow-hidden cursor-default transition-[border-color] duration-300 ${
+      className={`group relative rounded-2xl overflow-hidden cursor-pointer transition-[border-color] duration-300 ${
         isLarge ? "md:col-span-2 md:row-span-2" : ""
       }`}
       style={{
@@ -573,8 +577,9 @@ function CaseStudyCard({
         </p>
 
         {/* View Deployment link */}
-        <div
-          className="flex items-center gap-2 transition-all duration-300"
+        <Link
+          href={study.href || "#"}
+          className="flex items-center gap-2 transition-all duration-300 before:absolute before:inset-0"
           style={{
             opacity: isHovered ? 1 : 0,
             transform: isHovered ? "translateX(0)" : "translateX(-8px)",
@@ -584,7 +589,7 @@ function CaseStudyCard({
             View Deployment
           </span>
           <ArrowRight size={14} style={{ color: "#635BFF" }} />
-        </div>
+        </Link>
       </div>
 
       {/* Hover glow overlay */}
